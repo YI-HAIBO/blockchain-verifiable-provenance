@@ -14,6 +14,8 @@ Processing over Blockchain-Backed Databases* (Sections 3-4).
 | `run_full_eval.py` | Full evaluation harness (all dimensions, 3-run mean ± SD) |
 | `results/` | JSON output (auto-created) |
 | `figures/` | Camera-ready figures (`fig_architecture.png`, `fig_cover.png`) + `generate_figures.py` |
+| `data_source.py` | Pluggable data sources; `RealChainDataSource` is the M1 scaffold (ERC-20 / state-snapshot CSV adapters) so a **real chain dataset** is one export away |
+| `sota_harness.py` | M3 SOTA comparison scaffold; `run_verifiable_sota` reserves vChain / GEM²-tree / MBFT slots (never fabricates numbers) |
 
 ## Run (offline, stdlib only)
 ```bash
