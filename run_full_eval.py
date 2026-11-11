@@ -154,8 +154,12 @@ def measure_freshness(name, n, batch):
     }
 
 
-def measure_scaling(name, n_list, r_size=1000):
-    """Scaling: verify O(|R| log n), point O(log n), stable storage amp."""
+def measure_scaling(name, n_list, r_size=1000, reps=3):
+    """Scaling: verify O(|R| log n), point O(log n), stable storage amp.
+
+    Each point is measured ``reps`` times and reported as mean +/- std (the
+    verify cost is noisy on a shared machine, so a single-shot figure is not
+    representative and can appear non-monotonic)."""
     out = []
     for n in n_list:
         recs = WORKLOADS[name](n)
@@ -165,22 +169,37 @@ def measure_scaling(name, n_list, r_size=1000):
 
         # point query latency (avg over 20 probes)
         probe = [recs[i][0] for i in range(0, n, max(1, n // 20))][:20]
-        _, lat_pt = timed(lambda: [h.query_point(k) for k in probe])
 
         # fixed-size result (|R| = r_size) for range + verify
         lo = max(0, n // 2 - r_size // 2)
         hi = min(n, lo + r_size)
         k1, k2 = recs[lo][0], recs[hi - 1][0]
+
+        lat_pts, verify_ms_list = [], []
+        for _ in range(reps):
+            _, lat_pt = timed(lambda: [h.query_point(k) for k in probe])
+            lat_pts.append(lat_pt / len(probe))
+            res, _ = timed(lambda: h.query_range(k1, k2))
+            cert = h.certificate(res)
+            t0 = time.perf_counter()
+            ok = HybridIndex.verify_result(cert, h.root)
+            verify_ms_list.append((time.perf_counter() - t0) * 1000)
+
+        def mstd(v):
+            m = sum(v) / len(v)
+            sd = (sum((x - m) ** 2 for x in v) / max(1, len(v))) ** 0.5
+            return round(m, 3), round(sd, 3)
+
+        pm, psd = mstd(lat_pts)
+        vm, vsd = mstd(verify_ms_list)
         res, lat_rg = timed(lambda: h.query_range(k1, k2))
         cert = h.certificate(res)
-        t0 = time.perf_counter()
-        ok = HybridIndex.verify_result(cert, h.root)
-        verify_ms = (time.perf_counter() - t0) * 1000
 
         out.append({
-            "n": n, "point_ms": round(lat_pt / len(probe), 4),
+            "n": n, "point_ms": round(pm, 4), "point_ms_sd": round(psd, 4),
             "range_ms": round(lat_rg, 2), "result_rows": len(res),
-            "verify_ms": round(verify_ms, 2), "verify_ok": ok,
+            "verify_ms": round(vm, 2), "verify_ms_sd": round(vsd, 2),
+            "verify_ok": ok, "reps": reps,
             "cert_size_bytes": sum(32 * len(p) for _, _, p in cert),
             "storage_amp": round((data_size + tree_bytes) / max(1, data_size), 2),
         })
@@ -1255,6 +1274,122 @@ def measure_dynamic_consistency(n_accounts=2000, rounds=10, update_frac=0.5,
     }
 
 
+def measure_reorg(n=8000, batch=1000, finality_depth=2, fork_from=3):
+    """Chain fork / reorg handling (M5).
+
+    The verifier anchors to the FINALIZED canonical root set rather than to any
+    root an indexer supplies (trust bootstrap, M2). Scenarios:
+
+      R1  honest certificate against the latest FINALIZED canonical root -> accept
+      R2  certificate against a root on an ABANDONED fork (stale after reorg)
+          -> rejected (root is not on the finalized canonical chain)
+      R3  certificate against a NON-FINALIZED canonical root (inside the reorg
+          window) -> rejected (could still be reorged)
+      R4  certificate against an OLD FINALIZED root -> accepted (finalized roots
+          are immutable across reorgs)
+    """
+    recs = WORKLOADS["supplychain"](n)
+    nv = n // batch  # number of committed versions
+
+    # Branch A (canonical) and Branch B (abandoned) share the first `fork_from`
+    # versions, then diverge. B commits a DIFFERENT batch -> its root is stale.
+    hA = HybridIndex(recs[:batch])
+    for i in range(1, nv):
+        hA.append_batch(recs[i * batch:(i + 1) * batch])
+
+    hB = HybridIndex(recs[:batch])
+    for i in range(1, fork_from):
+        hB.append_batch(recs[i * batch:(i + 1) * batch])
+    # B's fork commits shifted/tampered records -> abandoned-branch root
+    stale_batch = [(k + "_s", v) for k, v in recs[fork_from * batch:(fork_from + 1) * batch]]
+    hB.append_batch(stale_batch)
+    stale_root = hB.root  # not on the canonical chain
+
+    canonical_roots = [hA.history[v - 1]["root"] for v in range(1, nv + 1)]
+    # finality: the newest `finality_depth` roots are NOT yet final
+    finalized = set(canonical_roots[:max(0, nv - finality_depth)])
+    latest_final = canonical_roots[max(0, nv - finality_depth - 1)]
+    tip = canonical_roots[-1]
+    old_final = canonical_roots[0]
+
+    def anchored(cert, root):
+        if root not in finalized:
+            return False
+        return HybridIndex.verify_range(cert, root)
+
+    # R1: honest certificate at the latest finalized version
+    vf = max(1, nv - finality_depth)
+    cert = hA.range_certificate_at(recs[0][0], recs[-1][0], vf)
+    r1_ok = anchored(cert, latest_final)
+    r1_size = HybridIndex.range_proof_size(cert)
+
+    # R2: certificate from the abandoned branch (stale root) -> rejected
+    certB = hB.range_certificate_at(recs[0][0], recs[-1][0], fork_from + 1)
+    r2_rejected = not anchored(certB, stale_root)
+    r2_root_stale = stale_root not in finalized
+
+    # R3: certificate against the non-finalized tip -> rejected
+    certT = hA.range_certificate_at(recs[0][0], recs[-1][0], nv)
+    r3_rejected = not anchored(certT, tip)
+    r3_root_not_final = tip not in finalized
+
+    # R4: certificate against an old finalized root -> accepted
+    certO = hA.range_certificate_at(recs[0][0], recs[-1][0], 1)
+    r4_ok = anchored(certO, old_final)
+
+    return {
+        "versions": nv, "finality_depth": finality_depth,
+        "canonical_roots": nv, "abandoned_roots": 1,
+        "R1_finalized_tip_accept": r1_ok,
+        "R1_subtrees": r1_size[0], "R1_proof_bytes": r1_size[1],
+        "R2_stale_fork_reject": r2_rejected, "R2_stale_root_detected": r2_root_stale,
+        "R3_nonfinalized_tip_reject": r3_rejected, "R3_tip_not_final": r3_root_not_final,
+        "R4_old_finalized_accept": r4_ok,
+    }
+
+
+def measure_compact_cert_curve(group_counts=(4, 8, 16, 32, 64),
+                               n_list=(1000, 10000, 100000, 1000000)):
+    """Compact subtree aggregation certificate size bound (M6).
+
+    Vary the number of groups |G| and the dataset size n; report the canonical
+    cover subtree count and certificate bytes. Empirically the certificate is
+    O(log n x |G|): subtree count ~ O(log n) and per-subtree accumulator map
+    ~ O(|G|), so total bytes ~ log n x |G| (vs O(n x |G|) for a per-record
+    certificate).
+    """
+    rows = []
+    for n in n_list:
+        # synthetic records with a controlled group id: value = str(group id)
+        G_probe = max(group_counts)
+        recs = [(f"rec:{i:08d}", str(i % G_probe)) for i in range(n)]
+        h = HybridIndex(recs)
+        k1, k2 = recs[n // 4][0], recs[3 * n // 4][0]
+        lo = bisect.bisect_left(h.keys, k1)
+        hi = bisect.bisect_right(h.keys, k2)
+        covered = hi - lo
+        for G in group_counts:
+            group_fn = lambda k, v, g=G: str(int(v) % g)  # reduce to g groups
+            acc = {}
+            R, cert = h.compact_aggregate_certificate(
+                k1, k2, group_fn, lambda: 0, lambda c, k, v: c + 1,
+                lambda a, b: a + b, lambda c: c)
+            subtrees, cert_bytes = HybridIndex.compact_cert_size(cert)
+            # per-record certificate baseline: ~32 B * log2(n) path per record
+            logn = max(1, n.bit_length())
+            per_rec_bytes = 32 * logn + 8
+            rec_cert_bytes = covered * per_rec_bytes
+            rows.append({
+                "n": n, "groups": G, "covered": covered,
+                "subtrees": subtrees, "cert_bytes": cert_bytes,
+                "compression_x": round(rec_cert_bytes / max(1, cert_bytes), 1),
+                "verify_ok": HybridIndex.verify_compact_aggregate(
+                    R, cert, h.root, group_fn, lambda: 0,
+                    lambda c, k, v: c + 1, lambda a, b: a + b, lambda c: c),
+            })
+    return rows
+
+
 def run_all(workload, n):
     spec = AGGREGATES[workload]
     agg = measure_aggregate(workload, n)
@@ -1335,6 +1470,11 @@ def main():
     # V: dynamic-state unified consistency (time-travel+update+delete)
     result["dynamic_consistency"] = measure_dynamic_consistency(
         n_accounts=2000, rounds=10, update_frac=0.5, delete_frac=0.2)
+    # M5: chain fork / reorg handling (finalized-root anchor)
+    result["reorg"] = measure_reorg(n=8000, batch=1000, finality_depth=2,
+                                    fork_from=3)
+    # M6: compact aggregation certificate size bound (vs n and |G|)
+    result["compact_cert_curve"] = measure_compact_cert_curve()
     out_path = OUT / "full_eval.json"
     out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps({"ok": True, "workloads": workloads, "n": args.n,

@@ -11,7 +11,9 @@ Processing over Blockchain-Backed Databases* (Sections 3-4).
 | `workloads.py` | e-voting / IoT time-series / supply-chain dataset generators |
 | `adversarial.py` | Untrusted index server forgery tests (soundness) |
 | `run_eval.py` | Evaluation harness; outputs latency/verification/storage/false-accept |
+| `run_full_eval.py` | Full evaluation harness (all dimensions, 3-run mean ± SD) |
 | `results/` | JSON output (auto-created) |
+| `figures/` | Camera-ready figures (`fig_architecture.png`, `fig_cover.png`) + `generate_figures.py` |
 
 ## Run (offline, stdlib only)
 ```bash
@@ -33,9 +35,18 @@ python run_eval.py --workload supplychain --n 4000
 - Verifiable updates over mutable state use a tri-state change set
   (insert/update/delete) and are verified against the target version root; the
   `run_full_eval.py` harness measures dynamic-state consistency end to end.
-- `run_full_eval.py` also covers scale (up to $n=10^6$), the authenticated
-  range proof, compact subtree aggregation certificates, multi-indexer quorum
-  verification, lightweight-client verification, lineage, mixed load, and
-  high-fidelity Ethereum-style data.
+- `run_full_eval.py` also covers scale (3-run mean ± SD, up to $n=10^6$), the
+  authenticated range proof, compact subtree aggregation certificates, the
+  **compact-certificate scaling curve** (`measure_compact_cert_curve`),
+  **chain-reorganization (reorg) handling** (`measure_reorg`: finalized-anchor
+  accept / abandoned-fork reject / non-finalized reject / old-finalized accept,
+  all True), multi-indexer quorum verification, lightweight-client verification,
+  lineage, mixed load, and high-fidelity Ethereum-style data.
+- Figures are generated reproducibly: `python3 figures/generate_figures.py`
+  (requires `matplotlib`), producing `figures/fig_architecture.png` and
+  `figures/fig_cover.png` as referenced by the paper.
 - To use a real chain, plug a client that reads committed transactions into
   `HybridIndex` instead of the in-memory generator.
+- **Prototype scope**: in-memory, pure-stdlib implementation (no storage engine,
+  no disk I/O); sha256 hashing. It demonstrates the verifiable-query mechanisms
+  and their adversarial guarantees, not a production indexing system.
