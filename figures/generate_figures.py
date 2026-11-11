@@ -8,6 +8,8 @@ Outputs (into the same directory as this script):
   - fig_cover.png        : canonical-cover decomposition for an authenticated
                           range proof (O(log n) subtrees + sibling-path folding).
 
+Figures carry structural labels only: no embedded titles and no explanatory
+sentences. All descriptive text belongs in the LaTeX captions.
 Pure matplotlib, deterministic, no external assets. Run:
 
     python3 figures/generate_figures.py
@@ -67,10 +69,6 @@ def fig_architecture():
     _arrow(ax, 5.8, 1.55, 5.8, 1.0)   # server -> client answer
     _arrow(ax, 5.0, 1.0, 5.0, 1.55)   # client challenge / verify
 
-    ax.text(0.2, 0.0,
-            "Indexer returns (R, C); client re-derives root from finalized chain and "
-            "verifies C. No data owner signs; trust comes from consensus.",
-            fontsize=7.5, color="#555555")
     fig.tight_layout()
     p = os.path.join(OUT, "fig_architecture.png")
     fig.savefig(p, dpi=150, bbox_inches="tight")
@@ -81,8 +79,6 @@ def fig_architecture():
 def fig_cover():
     fig, ax = plt.subplots(figsize=(7.2, 3.4))
     ax.set_xlim(0, 10); ax.set_ylim(0, 5); ax.axis("off")
-    ax.text(5, 4.6, "Authenticated range proof: canonical-cover decomposition",
-            ha="center", fontsize=10, fontweight="bold")
 
     # sorted key space
     n = 16
@@ -94,9 +90,6 @@ def fig_cover():
                                 9 * 0.6 + 0.04, 0.86,
                                 boxstyle="round,pad=0.0",
                                 fc="none", ec="#cc4444", lw=1.6))
-    ax.text(0.2 + 3 * 0.6 + 4.5 * 0.6, y + 0.75,
-            "query range [k3, k11] (contiguous)", ha="center", fontsize=8,
-            color="#cc4444")
 
     # O(log n) canonical-cover subtrees
     labels = ["T3", "T4-7", "T8", "T9-10", "T11"]
@@ -105,11 +98,9 @@ def fig_cover():
     ys = 1.7
     for lb, x in zip(labels, xs):
         _box(ax, x, ys, 0.9, 0.6, lb, "#cfe8ff")
-    ax.text(5, ys + 0.95, "O(log n) canonical-cover subtrees (proven against root_n)",
-            ha="center", fontsize=8.5)
 
     # sibling-path folding
-    _box(ax, 1.6, 0.3, 5.6, 0.6, "sibling-path folding ->\ncompact cert C",
+    _box(ax, 1.6, 0.3, 5.6, 0.6, "cert C",
          "#eeeeee", fs=8)
     for x in xs:
         _arrow(ax, x + 0.45, ys, x + 0.45, 0.95)
