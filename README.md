@@ -1,4 +1,4 @@
-# Verifiable Provenance Query over Blockchain Data — Prototype + Evaluation
+# Verifiable Provenance Query over Blockchain Data -- Prototype + Evaluation
 
 Supports the **ICDE 2027 Research Track, Round 2** submission *Efficient
 Verifiable Provenance Query Processing over Blockchain-Backed Databases*
@@ -12,11 +12,11 @@ Verifiable Provenance Query Processing over Blockchain-Backed Databases*
 | `workloads.py` | e-voting / IoT time-series / supply-chain dataset generators |
 | `adversarial.py` | Untrusted index server forgery tests (soundness) |
 | `run_eval.py` | Evaluation harness; outputs latency/verification/storage/false-accept |
-| `run_full_eval.py` | Full evaluation harness (all dimensions, 3-run mean ± SD) |
+| `run_full_eval.py` | Full evaluation harness (all dimensions, 3-run mean +/- SD) |
 | `results/` | JSON output (auto-created) |
 | `figures/` | Camera-ready figures (`fig_architecture.png`, `fig_cover.png`) + `generate_figures.py` |
 | `data_source.py` | Pluggable data sources; `RealChainDataSource` auto-detects flat / ERC-20 / state / versioned / mutable / fork CSV schemas |
-| `sota_harness.py` | M3 baseline harness; `run_naive_merkle` measures a naive full-path Merkle proof (25×–55× larger certificate than compact coverage); `run_verifiable_sota` reserves vChain / GEM²-tree / MBFT slots (never fabricates numbers) |
+| `sota_harness.py` | M3 baseline harness; `run_naive_merkle` measures a naive full-path Merkle proof (25x-55x larger certificate than compact coverage); `run_verifiable_sota` reserves vChain / GEM2-tree / MBFT slots (never fabricates numbers) |
 | `data/` | **Real Ethereum mainnet ERC-20 Transfer export** (flat CSV, per-row provenance audit CSV, source metadata) |
 
 ## Run (offline, stdlib only)
@@ -25,13 +25,13 @@ python run_eval.py --workload evoting     --n 2500
 python run_eval.py --workload iot         --n 5000
 python run_eval.py --workload supplychain --n 4000
 
-# Full evaluation harness (all dimensions, 3-run mean ± SD, scaling to 1e6)
+# Full evaluation harness (all dimensions, 3-run mean +/- SD, scaling to 1e6)
 python run_full_eval.py --all --n 10000
 
 # Real chain data (M1, already exported and measured)
 python run_full_eval.py --source real --data-path data/real_erc20_flat.csv --n 5000 --workload supplychain
 #   -> flat measures run on the CSV; versioned/mutable/fork experiments need the
-#      CSV schemas in 真实链数据导出字段规范.md (they degrade to a clear error
+#      CSV schemas in the export field-schema note (they degrade to a clear error
 #      dict until you provide them).
 ```
 
@@ -49,7 +49,7 @@ python run_full_eval.py --source real --data-path data/real_erc20_flat.csv --n 5
 - Verifiable updates over mutable state use a tri-state change set
   (insert/update/delete) and are verified against the target version root; the
   `run_full_eval.py` harness measures dynamic-state consistency end to end.
-- `run_full_eval.py` also covers scale (3-run mean ± SD, up to $n=10^6$), the
+- `run_full_eval.py` also covers scale (3-run mean +/- SD, up to $n=10^6$), the
   authenticated range proof, compact subtree aggregation certificates, the
   **compact-certificate scaling curve** (`measure_compact_cert_curve`),
   **chain-reorganization (reorg) handling** (`measure_reorg`: finalized-anchor
@@ -59,11 +59,11 @@ python run_full_eval.py --source real --data-path data/real_erc20_flat.csv --n 5
 - Figures are generated reproducibly: `python3 figures/generate_figures.py`
   (requires `matplotlib`), producing `figures/fig_architecture.png` and
   `figures/fig_cover.png` as referenced by the paper.
-- To use a real chain, export it to a CSV per `真实链数据导出字段规范.md` and run
+- To use a real chain, export it to a CSV following the export field-schema note and run
   `run_full_eval.py --source real --data-path <csv>`. The flat schema (A) covers
   every stateless experiment; versioned (B), mutable-op (C), and fork (D) schemas
   cover time-travel / reorg / mutable-state experiments. `data_source.py` detects
-  the CSV flavour from its header and raises an actionable error otherwise — it
+  the CSV flavour from its header and raises an actionable error otherwise -- it
   never silently falls back to synthetic traces.
 - **Prototype scope**: in-memory, pure-stdlib implementation (no storage engine,
   no disk I/O); sha256 hashing. It demonstrates the verifiable-query mechanisms
@@ -77,7 +77,7 @@ A real on-chain dataset is included and has been measured end to end.
 | Item | Value |
 |---|---|
 | Chain | Ethereum mainnet, ERC-20 `Transfer` logs |
-| Blocks | 26,390,983–26,390,992 (chain height 26,391,103 at export) |
+| Blocks | 26,390,983-26,390,992 (chain height 26,391,103 at export) |
 | Records | 6,000 events; 265 token contracts; 2,590 distinct senders |
 | Exported | 2026-11-11 18:33:13 (GMT+8) |
 | RPC | `https://eth.drpc.org` with fallbacks `1rpc.io/eth`, `eth-mainnet.public.blastapi.io`, `ethereum-rpc.publicnode.com` |
@@ -99,10 +99,10 @@ contract, so the real-chain experiment measures per-contract transfer counts.
 
 Measured on real records (n=5,000, 2,501 covered): aggregation correct,
 verify 21.39 ms, per-record certificate 1,040,416 B; compact certificate
-5,624 B (185×) with identical aggregate; range proof 10 subtrees / 2,944 B;
+5,624 B (185x) with identical aggregate; range proof 10 subtrees / 2,944 B;
 false-accept 0.0 over K=20 variations; replay 0.0 (hybrid) vs 1.0 (external
-DB); batch amortization 2.46×–6.16×; quorum 3/5/7 servers pass all five
+DB); batch amortization 2.46x-6.16x; quorum 3/5/7 servers pass all five
 checks. Versioned, mutable-state, deletion, and fork measures require
 Schema B/C/D exports and are reported on synthetic traces in the paper.
 
-See `data/真实链数据来源说明.md` for provenance and reproduction details.
+See `data/real_chain_data_provenance.md` for provenance and reproduction details.
