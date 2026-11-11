@@ -30,7 +30,12 @@ python run_eval.py --workload supplychain --n 4000
   storage amplification, freshness (not measured in skeleton), false-accept.
 
 ## Notes
-- The MST is rebuilt per batch (incremental update is a real-deployment
-  optimization and future work).
+- Verifiable updates over mutable state use a tri-state change set
+  (insert/update/delete) and are verified against the target version root; the
+  `run_full_eval.py` harness measures dynamic-state consistency end to end.
+- `run_full_eval.py` also covers scale (up to $n=10^6$), the authenticated
+  range proof, compact subtree aggregation certificates, multi-indexer quorum
+  verification, lightweight-client verification, lineage, mixed load, and
+  high-fidelity Ethereum-style data.
 - To use a real chain, plug a client that reads committed transactions into
   `HybridIndex` instead of the in-memory generator.
