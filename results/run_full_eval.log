@@ -1,2 +1,2 @@
 [written] C:\Users\Yi\WorkBuddy\2026-11-10-07-16-37\blockchain_bench\results\full_eval.json
-{"ok": true, "workloads": ["evoting", "iot", "supplychain"], "n": 10000, "out": "C:\\Users\\Yi\\WorkBuddy\\2026-11-10-07-16-37\\blockchain_bench\\results\\full_eval.json"}
+{"ok": true, "source": "synthetic", "workloads": ["evoting", "iot", "supplychain"], "n": 5000, "out": "C:\\Users\\Yi\\WorkBuddy\\2026-11-10-07-16-37\\blockchain_bench\\results\\full_eval.json"}

@@ -1,0 +1,47 @@
+{
+  "sota_summary": {
+    "baselines": {
+      "FullScan": {
+        "ms": 0.15849998453631997,
+        "cert": "none"
+      },
+      "OffchainOnly": {
+        "ms": 0.152299995534122,
+        "cert": "none"
+      },
+      "StandardIndexer": {
+        "ms": 0.014300021575763822,
+        "cert": "none"
+      }
+    },
+    "verifiable_sota": {
+      "HybridIndex": {
+        "ms": 1.8660000059753656,
+        "cert": "yes",
+        "verify": "yes"
+      },
+      "vChain": null,
+      "GEM2-tree": null,
+      "MBFT": null
+    },
+    "naive_merkle": {
+      "leaves_in_range": 100,
+      "cert_bytes": 35200,
+      "cover_bytes": 640,
+      "cert_ratio": 55.0,
+      "verify_ms": 1.8025000172201544,
+      "ok": true
+    }
+  },
+  "storage_overhead": {
+    "records": 2000,
+    "raw_records_bytes": 59000,
+    "index_bytes": 215168,
+    "storage_amp": 3.646915254237288,
+    "serialize_ms": 450.049,
+    "deserialize_ms": 3.0,
+    "query_after_reload_ms": 0.02,
+    "reload_total_ms": 453.069,
+    "source": "synthetic"
+  }
+}

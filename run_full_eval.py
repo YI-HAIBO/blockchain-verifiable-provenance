@@ -1586,6 +1586,60 @@ def _safe(label, fn):
         return {"error": f"{type(e).__name__}: {e}", "source": _SOURCE}
 
 
+def measure_storage_overhead(name="evoting", n=5000):
+    """M4 (real storage engine) honest proxy.
+
+    Quantifies how much disk the authenticated MST + index needs and the
+    serialize / reload / query cost a real storage engine would add. Stdlib-only
+    (pickle + temp file), so it runs offline. It does not replace a RocksDB /
+    LevelDB / Postgres-index measurement, but gives an honest storage footprint
+    and marshalling-overhead figure (the "storage amplification" baseline is
+    ``index_bytes / raw_records_bytes``).
+    """
+    import os
+    import pickle
+    import tempfile
+
+    from hybrid import HybridIndex
+    recs = load_records(name, n)
+    h = HybridIndex(recs)
+
+    t0 = time.perf_counter()
+    blob = pickle.dumps({"records": h.records, "levels": h.tree.level,
+                         "root": h.root})
+    ser_ms = (time.perf_counter() - t0) * 1000.0
+
+    raw_bytes = sum(len(k.encode()) + len(v.encode()) for k, v in h.records)
+    idx_bytes = len(blob)
+
+    with tempfile.NamedTemporaryFile(suffix=".mst", delete=False) as fh:
+        fh.write(blob)
+        disk = fh.name
+    t0 = time.perf_counter()
+    with open(disk, "rb") as fh:
+        loaded = pickle.load(fh)
+    deser_ms = (time.perf_counter() - t0) * 1000.0
+    os.unlink(disk)
+
+    h2 = HybridIndex(loaded["records"])
+    lo_k, hi_k = h2.records[0][0], h2.records[-1][0]
+    t0 = time.perf_counter()
+    h2.query_range(lo_k, hi_k)
+    qms = (time.perf_counter() - t0) * 1000.0
+
+    return {
+        "records": len(h.records),
+        "raw_records_bytes": raw_bytes,
+        "index_bytes": idx_bytes,
+        "storage_amp": (idx_bytes / raw_bytes) if raw_bytes else None,
+        "serialize_ms": round(ser_ms, 3),
+        "deserialize_ms": round(deser_ms, 3),
+        "query_after_reload_ms": round(qms, 3),
+        "reload_total_ms": round(ser_ms + deser_ms + qms, 3),
+        "source": _SOURCE,
+    }
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--workload", default="evoting", choices=list(WORKLOADS))

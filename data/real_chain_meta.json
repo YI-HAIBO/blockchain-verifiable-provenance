@@ -1,0 +1,20 @@
+{
+  "mode": "erc20_transfer_logs",
+  "chain": "Ethereum mainnet",
+  "rpc_endpoints": [
+    "https://eth.drpc.org",
+    "https://1rpc.io/eth",
+    "https://eth-mainnet.public.blastapi.io",
+    "https://ethereum-rpc.publicnode.com"
+  ],
+  "block_range": [
+    26390983,
+    26390992
+  ],
+  "latest_block_at_export": 26391103,
+  "rows": 6000,
+  "unique_contracts": 265,
+  "unique_senders": 2590,
+  "exported_at": "2026-11-11 18:33:13",
+  "note": "Real on-chain records. Each flat key is erc20:<12-digit block>:<tx hash>:<log index>; value is <token contract>,<from>,<to>,<transfer amount in token base units>. No synthetic or generated values."
+}

@@ -1,0 +1,2 @@
+[written] E:\2026-11-10-07-16-37\blockchain_bench\results\full_eval.json
+{"ok": true, "source": "real", "workloads": ["supplychain"], "n": 5000, "out": "E:\\2026-11-10-07-16-37\\blockchain_bench\\results\\full_eval.json"}

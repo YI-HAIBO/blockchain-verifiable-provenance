@@ -1,184 +1,18 @@
 {
-  "evoting": {
-    "workload": "evoting",
-    "n_records": 10000,
-    "aggregate": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "agg": "per-candidate tally",
-      "covered_records": 5001,
-      "correct": true,
-      "verify_ok": true,
-      "agg_ms": 1.84,
-      "verify_ms": 120.629,
-      "cert_size_bytes": 2240448,
-      "groups": 5,
-      "adversarial": {
-        "honest": true,
-        "forged_value": true,
-        "dropped_record": true,
-        "tampered_record": true,
-        "duplicate_record": true,
-        "reorder_ok": true
-      }
-    },
-    "freshness": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "batch": 1000,
-      "batches": 10,
-      "avg_lag_records": 4500.0,
-      "avg_lag_seconds": 35000.0,
-      "max_lag_seconds": 63000,
-      "final_root": "bea3f9c4dafc5ebe"
-    },
-    "lineage": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "prefix": "ballot:",
-      "returned": 10000,
-      "expected": 10000,
-      "complete": true,
-      "no_false_positive": true,
-      "lineage_ok": true
-    },
-    "selectivity": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "points": [
-        {
-          "selectivity": 0.01,
-          "rows": 100,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.62,
-          "indexer_ms": 0.02
-        },
-        {
-          "selectivity": 0.1,
-          "rows": 1000,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.64,
-          "indexer_ms": 0.26
-        },
-        {
-          "selectivity": 0.5,
-          "rows": 5000,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.8,
-          "indexer_ms": 0.53
-        }
-      ]
-    },
-    "baseline_compare": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "anchor_batch": 2000,
-      "replay_records": 6000,
-      "hybrid_verify": "reject",
-      "hybrid_false_accept": 0.0,
-      "externalDB_verify": "accept",
-      "externalDB_false_accept": 1.0,
-      "indexer_certificate": false,
-      "offchain_certificate": false
-    }
-  },
-  "iot": {
-    "workload": "iot",
-    "n_records": 10000,
-    "aggregate": {
-      "workload": "iot",
-      "n_records": 10000,
-      "agg": "per-sensor average",
-      "covered_records": 5001,
-      "correct": true,
-      "verify_ok": true,
-      "agg_ms": 2.77,
-      "verify_ms": 112.461,
-      "cert_size_bytes": 2240448,
-      "groups": 26,
-      "adversarial": {
-        "honest": true,
-        "forged_value": true,
-        "dropped_record": true,
-        "tampered_record": true,
-        "duplicate_record": true,
-        "reorder_ok": true
-      }
-    },
-    "freshness": {
-      "workload": "iot",
-      "n_records": 10000,
-      "batch": 1000,
-      "batches": 10,
-      "avg_lag_records": 4500.0,
-      "avg_lag_seconds": 300000.0,
-      "max_lag_seconds": 540000,
-      "final_root": "3d6f47ec0a78e14d"
-    },
-    "lineage": {
-      "workload": "iot",
-      "n_records": 10000,
-      "prefix": "iot:",
-      "returned": 10000,
-      "expected": 10000,
-      "complete": true,
-      "no_false_positive": true,
-      "lineage_ok": true
-    },
-    "selectivity": {
-      "workload": "iot",
-      "n_records": 10000,
-      "points": [
-        {
-          "selectivity": 0.01,
-          "rows": 100,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.59,
-          "indexer_ms": 0.02
-        },
-        {
-          "selectivity": 0.1,
-          "rows": 1000,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.62,
-          "indexer_ms": 0.23
-        },
-        {
-          "selectivity": 0.5,
-          "rows": 5000,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.76,
-          "indexer_ms": 0.51
-        }
-      ]
-    },
-    "baseline_compare": {
-      "workload": "iot",
-      "n_records": 10000,
-      "anchor_batch": 2000,
-      "replay_records": 6000,
-      "hybrid_verify": "reject",
-      "hybrid_false_accept": 0.0,
-      "externalDB_verify": "accept",
-      "externalDB_false_accept": 1.0,
-      "indexer_certificate": false,
-      "offchain_certificate": false
-    }
-  },
   "supplychain": {
     "workload": "supplychain",
-    "n_records": 10000,
+    "n_records": 5000,
     "aggregate": {
       "workload": "supplychain",
-      "n_records": 10000,
+      "n_records": 5000,
       "agg": "per-stage count",
-      "covered_records": 5001,
+      "covered_records": 2501,
       "correct": true,
       "verify_ok": true,
-      "agg_ms": 3.24,
-      "verify_ms": 115.456,
-      "cert_size_bytes": 2240448,
-      "groups": 5,
+      "agg_ms": 0.6,
+      "verify_ms": 21.392,
+      "cert_size_bytes": 1040416,
+      "groups": 164,
       "adversarial": {
         "honest": true,
         "forged_value": true,
@@ -190,56 +24,56 @@
     },
     "freshness": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "batch": 1000,
+      "n_records": 5000,
+      "batch": 500,
       "batches": 10,
-      "avg_lag_records": 4500.0,
-      "avg_lag_seconds": 18000000.0,
-      "max_lag_seconds": 32400000,
-      "final_root": "9048bfef3a44094c"
+      "avg_lag_records": 2250.0,
+      "avg_lag_seconds": 0.0,
+      "max_lag_seconds": 0,
+      "final_root": "1dabfe07a3bdcb9f"
     },
     "lineage": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "prefix": "sc:",
-      "returned": 10000,
-      "expected": 10000,
+      "n_records": 5000,
+      "prefix": "erc20:",
+      "returned": 5000,
+      "expected": 5000,
       "complete": true,
       "no_false_positive": true,
       "lineage_ok": true
     },
     "selectivity": {
       "workload": "supplychain",
-      "n_records": 10000,
+      "n_records": 5000,
       "points": [
         {
           "selectivity": 0.01,
-          "rows": 100,
+          "rows": 50,
           "hybrid_ms": 0.01,
-          "fullscan_ms": 0.59,
+          "fullscan_ms": 0.15,
           "indexer_ms": 0.01
         },
         {
           "selectivity": 0.1,
-          "rows": 1000,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.61,
-          "indexer_ms": 0.22
+          "rows": 500,
+          "hybrid_ms": 0.0,
+          "fullscan_ms": 0.17,
+          "indexer_ms": 0.03
         },
         {
           "selectivity": 0.5,
-          "rows": 5000,
-          "hybrid_ms": 0.01,
-          "fullscan_ms": 0.71,
-          "indexer_ms": 0.59
+          "rows": 2500,
+          "hybrid_ms": 0.0,
+          "fullscan_ms": 0.19,
+          "indexer_ms": 0.15
         }
       ]
     },
     "baseline_compare": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "anchor_batch": 2000,
-      "replay_records": 6000,
+      "n_records": 5000,
+      "anchor_batch": 1000,
+      "replay_records": 3000,
       "hybrid_verify": "reject",
       "hybrid_false_accept": 0.0,
       "externalDB_verify": "accept",
@@ -249,198 +83,27 @@
     }
   },
   "scaling": {
-    "evoting": {
-      "workload": "evoting",
-      "r_size": 1000,
-      "points": [
-        {
-          "n": 1000,
-          "point_ms": 0.001,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.01,
-          "result_rows": 1000,
-          "verify_ms": 16.42,
-          "verify_ms_sd": 0.11,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 320000,
-          "storage_amp": 3.17
-        },
-        {
-          "n": 10000,
-          "point_ms": 0.002,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.01,
-          "result_rows": 1000,
-          "verify_ms": 22.01,
-          "verify_ms_sd": 0.19,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 448000,
-          "storage_amp": 3.17
-        },
-        {
-          "n": 100000,
-          "point_ms": 0.003,
-          "point_ms_sd": 0.001,
-          "range_ms": 0.01,
-          "result_rows": 1000,
-          "verify_ms": 33.56,
-          "verify_ms_sd": 6.22,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 544000,
-          "storage_amp": 3.17
-        },
-        {
-          "n": 1000000,
-          "point_ms": 0.006,
-          "point_ms_sd": 0.003,
-          "range_ms": 0.02,
-          "result_rows": 1000,
-          "verify_ms": 30.72,
-          "verify_ms_sd": 0.37,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 640000,
-          "storage_amp": 3.17
-        }
-      ]
-    },
-    "iot": {
-      "workload": "iot",
-      "r_size": 1000,
-      "points": [
-        {
-          "n": 1000,
-          "point_ms": 0.001,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.03,
-          "result_rows": 1000,
-          "verify_ms": 16.46,
-          "verify_ms_sd": 0.31,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 320000,
-          "storage_amp": 3.92
-        },
-        {
-          "n": 10000,
-          "point_ms": 0.003,
-          "point_ms_sd": 0.002,
-          "range_ms": 0.01,
-          "result_rows": 1000,
-          "verify_ms": 21.86,
-          "verify_ms_sd": 0.51,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 448000,
-          "storage_amp": 3.92
-        },
-        {
-          "n": 100000,
-          "point_ms": 0.002,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.01,
-          "result_rows": 1000,
-          "verify_ms": 26.24,
-          "verify_ms_sd": 0.7,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 544000,
-          "storage_amp": 3.92
-        },
-        {
-          "n": 1000000,
-          "point_ms": 0.004,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.06,
-          "result_rows": 1000,
-          "verify_ms": 30.7,
-          "verify_ms_sd": 0.21,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 640000,
-          "storage_amp": 3.92
-        }
-      ]
-    },
     "supplychain": {
       "workload": "supplychain",
       "r_size": 1000,
       "points": [
         {
           "n": 1000,
-          "point_ms": 0.002,
-          "point_ms_sd": 0.001,
-          "range_ms": 0.03,
+          "point_ms": 0.0,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.0,
           "result_rows": 1000,
-          "verify_ms": 16.8,
-          "verify_ms_sd": 0.04,
+          "verify_ms": 6.66,
+          "verify_ms_sd": 0.03,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 320000,
-          "storage_amp": 3.09
-        },
-        {
-          "n": 10000,
-          "point_ms": 0.003,
-          "point_ms_sd": 0.002,
-          "range_ms": 0.03,
-          "result_rows": 1000,
-          "verify_ms": 22.71,
-          "verify_ms_sd": 0.69,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 448000,
-          "storage_amp": 3.08
-        },
-        {
-          "n": 100000,
-          "point_ms": 0.004,
-          "point_ms_sd": 0.001,
-          "range_ms": 0.01,
-          "result_rows": 1000,
-          "verify_ms": 26.78,
-          "verify_ms_sd": 0.43,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 544000,
-          "storage_amp": 3.08
-        },
-        {
-          "n": 1000000,
-          "point_ms": 0.003,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.1,
-          "result_rows": 1000,
-          "verify_ms": 30.81,
-          "verify_ms_sd": 0.39,
-          "verify_ok": true,
-          "reps": 3,
-          "cert_size_bytes": 640000,
-          "storage_amp": 3.08
+          "storage_amp": 1.28
         }
       ]
     }
   },
   "multi_seed": {
-    "evoting": {
-      "workload": "evoting",
-      "K": 20,
-      "list_false_accept_max": 0.0,
-      "list_false_accept_avg": 0.0,
-      "aggregate_ok_all_seeds": true,
-      "seeds_ok": 20
-    },
-    "iot": {
-      "workload": "iot",
-      "K": 20,
-      "list_false_accept_max": 0.0,
-      "list_false_accept_avg": 0.0,
-      "aggregate_ok_all_seeds": true,
-      "seeds_ok": 20
-    },
     "supplychain": {
       "workload": "supplychain",
       "K": 20,
@@ -451,104 +114,34 @@
     }
   },
   "incremental": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "batch": 1000,
-      "batches": 10,
-      "full_rebuild_ms": 70.6,
-      "avg_incremental_ms": 42.6,
-      "max_incremental_ms": 93.7
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "batch": 1000,
-      "batches": 10,
-      "full_rebuild_ms": 84.2,
-      "avg_incremental_ms": 43.0,
-      "max_incremental_ms": 105.2
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "batch": 1000,
+      "n_records": 5000,
+      "batch": 500,
       "batches": 10,
-      "full_rebuild_ms": 72.4,
-      "avg_incremental_ms": 41.9,
-      "max_incremental_ms": 94.4
+      "full_rebuild_ms": 14.7,
+      "avg_incremental_ms": 8.6,
+      "max_incremental_ms": 21.3
     }
   },
   "query_classes": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "point_ms": 0.008,
-      "range_ms": 0.094,
-      "agg_ms": 0.094,
-      "lineage_ms": 1.218,
-      "agg_verify_ms": 111.2,
-      "agg_covered": 5001,
-      "agg_cert_KB": 2188
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "point_ms": 0.006,
-      "range_ms": 0.056,
-      "agg_ms": 0.056,
-      "lineage_ms": 1.485,
-      "agg_verify_ms": 114.6,
-      "agg_covered": 5001,
-      "agg_cert_KB": 2188
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
+      "n_records": 5000,
       "point_ms": 0.005,
-      "range_ms": 0.068,
-      "agg_ms": 0.068,
-      "lineage_ms": 0.798,
-      "agg_verify_ms": 113.9,
-      "agg_covered": 5001,
-      "agg_cert_KB": 2188
+      "range_ms": 0.01,
+      "agg_ms": 0.01,
+      "lineage_ms": 0.175,
+      "agg_verify_ms": 21.6,
+      "agg_covered": 2501,
+      "agg_cert_KB": 1016
     }
   },
   "range_proof": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "range_rows": 2500,
-      "honest_accept": true,
-      "verify_ok": true,
-      "rejects_drop": true,
-      "rejects_duplicate": true,
-      "rejects_tamper": true,
-      "proof_subtrees": 10,
-      "proof_total_bytes": 2944,
-      "proof_boundary_bytes": 1056,
-      "gen_ms": 0.59,
-      "verify_ms": 7.679
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "range_rows": 2500,
-      "honest_accept": true,
-      "verify_ok": true,
-      "rejects_drop": true,
-      "rejects_duplicate": true,
-      "rejects_tamper": true,
-      "proof_subtrees": 10,
-      "proof_total_bytes": 2944,
-      "proof_boundary_bytes": 1056,
-      "gen_ms": 0.652,
-      "verify_ms": 7.671
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "range_rows": 2500,
+      "n_records": 5000,
+      "range_rows": 1250,
       "honest_accept": true,
       "verify_ok": true,
       "rejects_drop": true,
@@ -557,289 +150,32 @@
       "proof_subtrees": 10,
       "proof_total_bytes": 2944,
       "proof_boundary_bytes": 1056,
-      "gen_ms": 0.358,
-      "verify_ms": 9.165
+      "gen_ms": 0.081,
+      "verify_ms": 1.861
     }
   },
   "range_proof_scaling": {
-    "evoting": [
-      {
-        "workload": "evoting",
-        "n_records": 1000,
-        "range_rows": 250,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 7,
-        "proof_total_bytes": 1440,
-        "proof_boundary_bytes": 800,
-        "gen_ms": 0.081,
-        "verify_ms": 0.835
-      },
-      {
-        "workload": "evoting",
-        "n_records": 10000,
-        "range_rows": 2500,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 10,
-        "proof_total_bytes": 2944,
-        "proof_boundary_bytes": 1056,
-        "gen_ms": 0.382,
-        "verify_ms": 11.023
-      },
-      {
-        "workload": "evoting",
-        "n_records": 100000,
-        "range_rows": 25000,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 11,
-        "proof_total_bytes": 3008,
-        "proof_boundary_bytes": 1184,
-        "gen_ms": 5.231,
-        "verify_ms": 86.479
-      },
-      {
-        "workload": "evoting",
-        "n_records": 1000000,
-        "range_rows": 250000,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 14,
-        "proof_total_bytes": 4800,
-        "proof_boundary_bytes": 1472,
-        "gen_ms": 93.409,
-        "verify_ms": 1055.54
-      }
-    ],
-    "iot": [
-      {
-        "workload": "iot",
-        "n_records": 1000,
-        "range_rows": 250,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 7,
-        "proof_total_bytes": 1440,
-        "proof_boundary_bytes": 800,
-        "gen_ms": 0.107,
-        "verify_ms": 1.19
-      },
-      {
-        "workload": "iot",
-        "n_records": 10000,
-        "range_rows": 2500,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 10,
-        "proof_total_bytes": 2944,
-        "proof_boundary_bytes": 1056,
-        "gen_ms": 0.396,
-        "verify_ms": 7.418
-      },
-      {
-        "workload": "iot",
-        "n_records": 100000,
-        "range_rows": 25000,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 11,
-        "proof_total_bytes": 3008,
-        "proof_boundary_bytes": 1184,
-        "gen_ms": 5.909,
-        "verify_ms": 84.321
-      },
-      {
-        "workload": "iot",
-        "n_records": 1000000,
-        "range_rows": 250000,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 14,
-        "proof_total_bytes": 4800,
-        "proof_boundary_bytes": 1472,
-        "gen_ms": 86.442,
-        "verify_ms": 878.288
-      }
-    ],
-    "supplychain": [
-      {
-        "workload": "supplychain",
-        "n_records": 1000,
-        "range_rows": 250,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 7,
-        "proof_total_bytes": 1440,
-        "proof_boundary_bytes": 800,
-        "gen_ms": 0.115,
-        "verify_ms": 1.147
-      },
-      {
-        "workload": "supplychain",
-        "n_records": 10000,
-        "range_rows": 2500,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 10,
-        "proof_total_bytes": 2944,
-        "proof_boundary_bytes": 1056,
-        "gen_ms": 0.386,
-        "verify_ms": 7.899
-      },
-      {
-        "workload": "supplychain",
-        "n_records": 100000,
-        "range_rows": 25000,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 11,
-        "proof_total_bytes": 3008,
-        "proof_boundary_bytes": 1184,
-        "gen_ms": 9.274,
-        "verify_ms": 86.417
-      },
-      {
-        "workload": "supplychain",
-        "n_records": 1000000,
-        "range_rows": 250000,
-        "honest_accept": true,
-        "verify_ok": true,
-        "rejects_drop": true,
-        "rejects_duplicate": true,
-        "rejects_tamper": true,
-        "proof_subtrees": 14,
-        "proof_total_bytes": 4800,
-        "proof_boundary_bytes": 1472,
-        "gen_ms": 112.971,
-        "verify_ms": 1042.02
-      }
-    ]
+    "supplychain": {
+      "error": "IndexError: list index out of range",
+      "source": "real"
+    }
   },
   "versioned": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "batch": 1000,
-      "versions": 10,
-      "target_version": 5,
-      "range_rows": 5000,
-      "T1_time_travel_correct": true,
-      "T2_future_forgery_rejected": true,
-      "T3_perrecord_stale_accept": true,
-      "T3_rangeproof_stale_reject": true,
-      "T4_honest_at_target_root": true,
-      "T4_oldroot_replay_rejected": true,
-      "time_travel_ms": 0.012,
-      "time_travel_verify_ms": 8.988
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "batch": 1000,
-      "versions": 10,
-      "target_version": 5,
-      "range_rows": 5000,
-      "T1_time_travel_correct": true,
-      "T2_future_forgery_rejected": true,
-      "T3_perrecord_stale_accept": true,
-      "T3_rangeproof_stale_reject": true,
-      "T4_honest_at_target_root": true,
-      "T4_oldroot_replay_rejected": true,
-      "time_travel_ms": 0.012,
-      "time_travel_verify_ms": 8.972
-    },
     "supplychain": {
-      "workload": "supplychain",
-      "n_records": 10000,
-      "batch": 1000,
-      "versions": 10,
-      "target_version": 5,
-      "range_rows": 5000,
-      "T1_time_travel_correct": true,
-      "T2_future_forgery_rejected": true,
-      "T3_perrecord_stale_accept": true,
-      "T3_rangeproof_stale_reject": true,
-      "T4_honest_at_target_root": true,
-      "T4_oldroot_replay_rejected": true,
-      "time_travel_ms": 0.027,
-      "time_travel_verify_ms": 8.326
+      "error": "ValueError: versioned CSV needs columns: version,key,value",
+      "source": "real"
     }
   },
   "mutable_state": {
-    "accounts": 2000,
-    "rounds": 10,
-    "versions": 11,
-    "target_version": 5,
-    "skip_version": 7,
-    "build_ms": 145.8,
-    "latest_value_ok": true,
-    "time_travel_ok": true,
-    "update_replay_rejected": true,
-    "skip_version_rejected": true,
-    "version_bound_not_reusable": true,
-    "point_ms": 0.001,
-    "time_travel_ms": 0.001
+    "error": "ValueError: mutable CSV needs columns: op,key,value[,version] (op in set/delete)",
+    "source": "real"
   },
   "attacks": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "versions": 10,
-      "range_rows": 5001,
-      "boundary_rejected": true,
-      "cross_boundary_rejected": true,
-      "skip_version_honest_at_v3": true,
-      "skip_version_rejected_vs_v5": true
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "versions": 10,
-      "range_rows": 5001,
-      "boundary_rejected": true,
-      "cross_boundary_rejected": true,
-      "skip_version_honest_at_v3": true,
-      "skip_version_rejected_vs_v5": true
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
+      "n_records": 5000,
       "versions": 10,
-      "range_rows": 5001,
+      "range_rows": 2501,
       "boundary_rejected": true,
       "cross_boundary_rejected": true,
       "skip_version_honest_at_v3": true,
@@ -847,522 +183,175 @@
     }
   },
   "verify_curve": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "points": [
-        {
-          "R": 10,
-          "verify_ms": 0.228,
-          "per_record_ms": 0.0228,
-          "cert_bytes": 4480,
-          "verify_ok": true
-        },
-        {
-          "R": 50,
-          "verify_ms": 1.009,
-          "per_record_ms": 0.0202,
-          "cert_bytes": 22400,
-          "verify_ok": true
-        },
-        {
-          "R": 100,
-          "verify_ms": 2.019,
-          "per_record_ms": 0.0202,
-          "cert_bytes": 44800,
-          "verify_ok": true
-        },
-        {
-          "R": 500,
-          "verify_ms": 11.678,
-          "per_record_ms": 0.0234,
-          "cert_bytes": 224000,
-          "verify_ok": true
-        },
-        {
-          "R": 1000,
-          "verify_ms": 21.87,
-          "per_record_ms": 0.0219,
-          "cert_bytes": 448000,
-          "verify_ok": true
-        },
-        {
-          "R": 2500,
-          "verify_ms": 55.706,
-          "per_record_ms": 0.0223,
-          "cert_bytes": 1120000,
-          "verify_ok": true
-        },
-        {
-          "R": 5000,
-          "verify_ms": 111.498,
-          "per_record_ms": 0.0223,
-          "cert_bytes": 2240000,
-          "verify_ok": true
-        }
-      ]
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "points": [
-        {
-          "R": 10,
-          "verify_ms": 1.217,
-          "per_record_ms": 0.1217,
-          "cert_bytes": 4480,
-          "verify_ok": true
-        },
-        {
-          "R": 50,
-          "verify_ms": 2.457,
-          "per_record_ms": 0.0491,
-          "cert_bytes": 22400,
-          "verify_ok": true
-        },
-        {
-          "R": 100,
-          "verify_ms": 4.544,
-          "per_record_ms": 0.0454,
-          "cert_bytes": 44800,
-          "verify_ok": true
-        },
-        {
-          "R": 500,
-          "verify_ms": 15.264,
-          "per_record_ms": 0.0305,
-          "cert_bytes": 224000,
-          "verify_ok": true
-        },
-        {
-          "R": 1000,
-          "verify_ms": 25.541,
-          "per_record_ms": 0.0255,
-          "cert_bytes": 448000,
-          "verify_ok": true
-        },
-        {
-          "R": 2500,
-          "verify_ms": 57.373,
-          "per_record_ms": 0.0229,
-          "cert_bytes": 1120000,
-          "verify_ok": true
-        },
-        {
-          "R": 5000,
-          "verify_ms": 115.226,
-          "per_record_ms": 0.023,
-          "cert_bytes": 2240000,
-          "verify_ok": true
-        }
-      ]
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
+      "n_records": 5000,
       "points": [
         {
           "R": 10,
-          "verify_ms": 0.229,
-          "per_record_ms": 0.0229,
-          "cert_bytes": 4480,
+          "verify_ms": 0.105,
+          "per_record_ms": 0.0105,
+          "cert_bytes": 4160,
           "verify_ok": true
         },
         {
           "R": 50,
-          "verify_ms": 1.052,
-          "per_record_ms": 0.021,
-          "cert_bytes": 22400,
+          "verify_ms": 0.422,
+          "per_record_ms": 0.0084,
+          "cert_bytes": 20800,
           "verify_ok": true
         },
         {
           "R": 100,
-          "verify_ms": 2.06,
-          "per_record_ms": 0.0206,
-          "cert_bytes": 44800,
+          "verify_ms": 0.844,
+          "per_record_ms": 0.0084,
+          "cert_bytes": 41600,
           "verify_ok": true
         },
         {
           "R": 500,
-          "verify_ms": 10.693,
-          "per_record_ms": 0.0214,
-          "cert_bytes": 224000,
+          "verify_ms": 4.184,
+          "per_record_ms": 0.0084,
+          "cert_bytes": 208000,
           "verify_ok": true
         },
         {
           "R": 1000,
-          "verify_ms": 22.675,
-          "per_record_ms": 0.0227,
-          "cert_bytes": 448000,
+          "verify_ms": 8.312,
+          "per_record_ms": 0.0083,
+          "cert_bytes": 416000,
           "verify_ok": true
         },
         {
           "R": 2500,
-          "verify_ms": 55.424,
-          "per_record_ms": 0.0222,
-          "cert_bytes": 1120000,
+          "verify_ms": 20.804,
+          "per_record_ms": 0.0083,
+          "cert_bytes": 1040000,
           "verify_ok": true
         },
         {
           "R": 5000,
-          "verify_ms": 113.351,
-          "per_record_ms": 0.0227,
-          "cert_bytes": 2240000,
+          "verify_ms": 41.674,
+          "per_record_ms": 0.0083,
+          "cert_bytes": 2080000,
           "verify_ok": true
         }
       ]
     }
   },
   "portable_verify": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "range_rows": 5001,
-      "verifier_input_bytes": 171053,
-      "verifier_peak_bytes": 681774,
-      "verifier_peak_point_bytes": 636,
-      "fullscan_input_bytes": 295000,
-      "verifier_input_vs_fullscan": 0.5798,
-      "range_ok": true,
-      "point_ok": true
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "range_rows": 5001,
-      "verifier_input_bytes": 133046,
-      "verifier_peak_bytes": 681838,
-      "verifier_peak_point_bytes": 636,
-      "fullscan_input_bytes": 219000,
-      "verifier_input_vs_fullscan": 0.6075,
-      "range_ok": true,
-      "point_ok": true
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "range_rows": 5001,
-      "verifier_input_bytes": 177479,
-      "verifier_peak_bytes": 681838,
-      "verifier_peak_point_bytes": 636,
-      "fullscan_input_bytes": 307844,
-      "verifier_input_vs_fullscan": 0.5765,
+      "n_records": 5000,
+      "range_rows": 2501,
+      "verifier_input_bytes": 595466,
+      "verifier_peak_bytes": 340014,
+      "verifier_peak_point_bytes": 816,
+      "fullscan_input_bytes": 1159389,
+      "verifier_input_vs_fullscan": 0.5136,
       "range_ok": true,
       "point_ok": true
     }
   },
   "lineage_verify": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "prefix": "ballot:",
-      "lineage_nodes": 10000,
-      "honest_accept": true,
-      "rejects_drop_node": true,
-      "rejects_duplicate_node": true,
-      "rejects_tamper": true,
-      "proof_subtrees": 5,
-      "proof_boundary_bytes": 448,
-      "query_ms": 1.729,
-      "verify_ms": 35.298
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "prefix": "iot:",
-      "lineage_nodes": 10000,
-      "honest_accept": true,
-      "rejects_drop_node": true,
-      "rejects_duplicate_node": true,
-      "rejects_tamper": true,
-      "proof_subtrees": 5,
-      "proof_boundary_bytes": 448,
-      "query_ms": 0.717,
-      "verify_ms": 33.486
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "prefix": "sc:",
-      "lineage_nodes": 10000,
+      "n_records": 5000,
+      "prefix": "erc20:",
+      "lineage_nodes": 5000,
       "honest_accept": true,
       "rejects_drop_node": true,
       "rejects_duplicate_node": true,
       "rejects_tamper": true,
       "proof_subtrees": 5,
       "proof_boundary_bytes": 448,
-      "query_ms": 0.883,
-      "verify_ms": 34.07
+      "query_ms": 0.129,
+      "verify_ms": 7.078
     }
   },
   "concurrent": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "batch": 1000,
-      "steps": 9,
-      "verify_ok_all_steps": true,
-      "avg_query_ms": 3.397,
-      "max_query_ms": 4.463,
-      "static_query_ms": 3.225,
-      "static_ok": true
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "batch": 1000,
-      "steps": 9,
-      "verify_ok_all_steps": true,
-      "avg_query_ms": 3.449,
-      "max_query_ms": 4.264,
-      "static_query_ms": 3.675,
-      "static_ok": true
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "batch": 1000,
+      "n_records": 5000,
+      "batch": 500,
       "steps": 9,
       "verify_ok_all_steps": true,
-      "avg_query_ms": 3.264,
-      "max_query_ms": 3.769,
-      "static_query_ms": 3.203,
+      "avg_query_ms": 0.765,
+      "max_query_ms": 0.807,
+      "static_query_ms": 0.821,
       "static_ok": true
     }
   },
   "highfidelity": {
-    "tx_logs": {
-      "n": 10000,
-      "contracts": 64,
-      "aggregate_ok": true,
-      "groups": 32,
-      "range_proof_honest": true,
-      "range_proof_drop_rejected": true,
-      "time_travel_ok": true,
-      "versions": 10,
-      "lineage_ok": true,
-      "lineage_nodes": 156,
-      "lineage_proof_subtrees": 4,
-      "lineage_proof_boundary_bytes": 480
-    },
-    "state": {
-      "accounts": 2000,
-      "versions": 11,
-      "latest_value_ok": true,
-      "time_travel_ok": true,
-      "update_replay_rejected": true
-    }
+    "note": "high-fidelity Ethereum-style traces are synthetic; skipped under --source real. Use a real ERC-20 export with --data-path for the flat/versioned measures instead.",
+    "source": "real"
   },
   "delete_semantics": {
-    "accounts": 2000,
-    "rounds": 10,
-    "versions": 11,
-    "live_at_latest": 1800,
-    "deleted_at_latest": 200,
-    "build_ms": 122.5,
-    "N1_live_state_ok": true,
-    "N2_absent_query": true,
-    "N2_nonmembership_ok": true,
-    "N3_time_travel_predel_ok": true,
-    "N4_delete_replay_rejected": true,
-    "N5_value_restored": true,
-    "N5_recovery_accepted": true,
-    "N5_predel_replay_rejected": true
+    "error": "ValueError: mutable CSV needs columns: op,key,value[,version] (op in set/delete)",
+    "source": "real"
   },
   "batch_verify": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "points": [
-        {
-          "K": 10,
-          "individual_ms": 0.233,
-          "per_record_individual_ms": 0.02329,
-          "batched_ms": 0.11,
-          "per_record_batched_ms": 0.01102,
-          "amortization_ratio": 2.11,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 50,
-          "individual_ms": 1.092,
-          "per_record_individual_ms": 0.02183,
-          "batched_ms": 0.217,
-          "per_record_batched_ms": 0.00435,
-          "amortization_ratio": 5.02,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 100,
-          "individual_ms": 2.02,
-          "per_record_individual_ms": 0.0202,
-          "batched_ms": 0.401,
-          "per_record_batched_ms": 0.00401,
-          "amortization_ratio": 5.04,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 500,
-          "individual_ms": 12.087,
-          "per_record_individual_ms": 0.02417,
-          "batched_ms": 1.561,
-          "per_record_batched_ms": 0.00312,
-          "amortization_ratio": 7.75,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 1000,
-          "individual_ms": 21.937,
-          "per_record_individual_ms": 0.02194,
-          "batched_ms": 3.545,
-          "per_record_batched_ms": 0.00355,
-          "amortization_ratio": 6.19,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 5000,
-          "individual_ms": 114.813,
-          "per_record_individual_ms": 0.02296,
-          "batched_ms": 17.318,
-          "per_record_batched_ms": 0.00346,
-          "amortization_ratio": 6.63,
-          "individual_ok": true,
-          "batched_ok": true
-        }
-      ]
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "points": [
-        {
-          "K": 10,
-          "individual_ms": 0.227,
-          "per_record_individual_ms": 0.02271,
-          "batched_ms": 0.109,
-          "per_record_batched_ms": 0.01094,
-          "amortization_ratio": 2.08,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 50,
-          "individual_ms": 1.019,
-          "per_record_individual_ms": 0.02039,
-          "batched_ms": 0.221,
-          "per_record_batched_ms": 0.00442,
-          "amortization_ratio": 4.61,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 100,
-          "individual_ms": 2.046,
-          "per_record_individual_ms": 0.02046,
-          "batched_ms": 0.805,
-          "per_record_batched_ms": 0.00805,
-          "amortization_ratio": 2.54,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 500,
-          "individual_ms": 11.142,
-          "per_record_individual_ms": 0.02228,
-          "batched_ms": 1.557,
-          "per_record_batched_ms": 0.00311,
-          "amortization_ratio": 7.16,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 1000,
-          "individual_ms": 23.294,
-          "per_record_individual_ms": 0.02329,
-          "batched_ms": 3.083,
-          "per_record_batched_ms": 0.00308,
-          "amortization_ratio": 7.56,
-          "individual_ok": true,
-          "batched_ok": true
-        },
-        {
-          "K": 5000,
-          "individual_ms": 114.671,
-          "per_record_individual_ms": 0.02293,
-          "batched_ms": 17.628,
-          "per_record_batched_ms": 0.00353,
-          "amortization_ratio": 6.51,
-          "individual_ok": true,
-          "batched_ok": true
-        }
-      ]
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
+      "n_records": 5000,
       "points": [
         {
           "K": 10,
-          "individual_ms": 0.231,
-          "per_record_individual_ms": 0.02311,
-          "batched_ms": 0.109,
-          "per_record_batched_ms": 0.01092,
-          "amortization_ratio": 2.12,
+          "individual_ms": 0.111,
+          "per_record_individual_ms": 0.01112,
+          "batched_ms": 0.045,
+          "per_record_batched_ms": 0.00452,
+          "amortization_ratio": 2.46,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 50,
-          "individual_ms": 1.068,
-          "per_record_individual_ms": 0.02137,
-          "batched_ms": 0.22,
-          "per_record_batched_ms": 0.00439,
-          "amortization_ratio": 4.86,
+          "individual_ms": 0.441,
+          "per_record_individual_ms": 0.00882,
+          "batched_ms": 0.126,
+          "per_record_batched_ms": 0.00252,
+          "amortization_ratio": 3.5,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 100,
-          "individual_ms": 2.182,
-          "per_record_individual_ms": 0.02182,
-          "batched_ms": 1.055,
-          "per_record_batched_ms": 0.01055,
-          "amortization_ratio": 2.07,
+          "individual_ms": 0.884,
+          "per_record_individual_ms": 0.00884,
+          "batched_ms": 0.2,
+          "per_record_batched_ms": 0.002,
+          "amortization_ratio": 4.42,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 500,
-          "individual_ms": 11.895,
-          "per_record_individual_ms": 0.02379,
-          "batched_ms": 1.617,
-          "per_record_batched_ms": 0.00323,
-          "amortization_ratio": 7.36,
+          "individual_ms": 4.381,
+          "per_record_individual_ms": 0.00876,
+          "batched_ms": 0.784,
+          "per_record_batched_ms": 0.00157,
+          "amortization_ratio": 5.59,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 1000,
-          "individual_ms": 23.789,
-          "per_record_individual_ms": 0.02379,
-          "batched_ms": 3.142,
-          "per_record_batched_ms": 0.00314,
-          "amortization_ratio": 7.57,
+          "individual_ms": 8.86,
+          "per_record_individual_ms": 0.00886,
+          "batched_ms": 1.481,
+          "per_record_batched_ms": 0.00148,
+          "amortization_ratio": 5.98,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 5000,
-          "individual_ms": 114.041,
-          "per_record_individual_ms": 0.02281,
-          "batched_ms": 18.12,
-          "per_record_batched_ms": 0.00362,
-          "amortization_ratio": 6.29,
+          "individual_ms": 44.295,
+          "per_record_individual_ms": 0.00886,
+          "batched_ms": 7.186,
+          "per_record_batched_ms": 0.00144,
+          "amortization_ratio": 6.16,
           "individual_ok": true,
           "batched_ok": true
         }
@@ -1370,77 +359,27 @@
     }
   },
   "compact_aggregate": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "covered": 5001,
-      "groups": 5,
-      "per_record_cert_bytes": 2240448,
-      "compact_cert_bytes": 3960,
-      "compression_ratio": 565.8,
-      "compact_subtrees": 13,
-      "aggregate_equal": true,
-      "compact_verify_ok": true,
-      "compact_verify_ms": 0.223,
-      "forged_value_rejected": true,
-      "dropped_subtree_rejected": true
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "covered": 5001,
-      "groups": 26,
-      "per_record_cert_bytes": 2240448,
-      "compact_cert_bytes": 3792,
-      "compression_ratio": 590.8,
-      "compact_subtrees": 13,
-      "aggregate_equal": true,
-      "compact_verify_ok": true,
-      "compact_verify_ms": 0.201,
-      "forged_value_rejected": true,
-      "dropped_subtree_rejected": true
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "covered": 5001,
-      "groups": 5,
-      "per_record_cert_bytes": 2240448,
-      "compact_cert_bytes": 3960,
-      "compression_ratio": 565.8,
+      "n_records": 5000,
+      "covered": 2501,
+      "groups": 164,
+      "per_record_cert_bytes": 1040416,
+      "compact_cert_bytes": 5624,
+      "compression_ratio": 185.0,
       "compact_subtrees": 13,
       "aggregate_equal": true,
       "compact_verify_ok": true,
-      "compact_verify_ms": 0.187,
+      "compact_verify_ms": 0.128,
       "forged_value_rejected": true,
       "dropped_subtree_rejected": true
     }
   },
   "aggregate_coverage": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
-      "covered": 5001,
-      "honest_coverage_ok": true,
-      "subset_aggregate_accept": true,
-      "subset_crossverify_reject": true,
-      "superset_aggregate_accept": true,
-      "superset_crossverify_reject": true
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "covered": 5001,
-      "honest_coverage_ok": true,
-      "subset_aggregate_accept": true,
-      "subset_crossverify_reject": true,
-      "superset_aggregate_accept": true,
-      "superset_crossverify_reject": true
-    },
     "supplychain": {
       "workload": "supplychain",
-      "n_records": 10000,
-      "covered": 5001,
+      "n_records": 5000,
+      "covered": 2501,
       "honest_coverage_ok": true,
       "subset_aggregate_accept": true,
       "subset_crossverify_reject": true,
@@ -1449,9 +388,9 @@
     }
   },
   "quorum": {
-    "evoting": {
-      "workload": "evoting",
-      "n_records": 10000,
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
       "points": [
         {
           "servers": 3,
@@ -1462,101 +401,11 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 343.472,
-          "single_verify_ms": 112.831,
-          "quorum_overhead": 3.0
-        },
-        {
-          "servers": 5,
-          "f_honest_majority": 2,
-          "threshold": 3,
-          "X1_all_honest_accept": true,
-          "X2_malicious_subset_honest_wins": true,
-          "X3_malicious_forge_excluded": true,
-          "X4_malicious_offline_ok": true,
-          "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 578.355,
-          "single_verify_ms": 112.831,
-          "quorum_overhead": 5.1
-        },
-        {
-          "servers": 7,
-          "f_honest_majority": 3,
-          "threshold": 4,
-          "X1_all_honest_accept": true,
-          "X2_malicious_subset_honest_wins": true,
-          "X3_malicious_forge_excluded": true,
-          "X4_malicious_offline_ok": true,
-          "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 821.584,
-          "single_verify_ms": 112.831,
-          "quorum_overhead": 7.3
-        }
-      ]
-    },
-    "iot": {
-      "workload": "iot",
-      "n_records": 10000,
-      "points": [
-        {
-          "servers": 3,
-          "f_honest_majority": 1,
-          "threshold": 2,
-          "X1_all_honest_accept": true,
-          "X2_malicious_subset_honest_wins": true,
-          "X3_malicious_forge_excluded": true,
-          "X4_malicious_offline_ok": true,
-          "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 347.155,
-          "single_verify_ms": 116.808,
-          "quorum_overhead": 3.0
-        },
-        {
-          "servers": 5,
-          "f_honest_majority": 2,
-          "threshold": 3,
-          "X1_all_honest_accept": true,
-          "X2_malicious_subset_honest_wins": true,
-          "X3_malicious_forge_excluded": true,
-          "X4_malicious_offline_ok": true,
-          "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 577.181,
-          "single_verify_ms": 116.808,
+          "quorum_verify_ms": 135.898,
+          "single_verify_ms": 27.542,
           "quorum_overhead": 4.9
         },
         {
-          "servers": 7,
-          "f_honest_majority": 3,
-          "threshold": 4,
-          "X1_all_honest_accept": true,
-          "X2_malicious_subset_honest_wins": true,
-          "X3_malicious_forge_excluded": true,
-          "X4_malicious_offline_ok": true,
-          "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 833.998,
-          "single_verify_ms": 116.808,
-          "quorum_overhead": 7.1
-        }
-      ]
-    },
-    "supplychain": {
-      "workload": "supplychain",
-      "n_records": 10000,
-      "points": [
-        {
-          "servers": 3,
-          "f_honest_majority": 1,
-          "threshold": 2,
-          "X1_all_honest_accept": true,
-          "X2_malicious_subset_honest_wins": true,
-          "X3_malicious_forge_excluded": true,
-          "X4_malicious_offline_ok": true,
-          "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 347.803,
-          "single_verify_ms": 116.096,
-          "quorum_overhead": 3.0
-        },
-        {
           "servers": 5,
           "f_honest_majority": 2,
           "threshold": 3,
@@ -1565,9 +414,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 601.631,
-          "single_verify_ms": 116.096,
-          "quorum_overhead": 5.2
+          "quorum_verify_ms": 214.593,
+          "single_verify_ms": 27.542,
+          "quorum_overhead": 7.8
         },
         {
           "servers": 7,
@@ -1578,41 +427,20 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 812.681,
-          "single_verify_ms": 116.096,
-          "quorum_overhead": 7.0
+          "quorum_verify_ms": 308.709,
+          "single_verify_ms": 27.542,
+          "quorum_overhead": 11.2
         }
       ]
     }
   },
   "dynamic_consistency": {
-    "accounts": 2000,
-    "rounds": 10,
-    "versions": 11,
-    "lifecycle_key": "acct:00000000",
-    "lifecycle_present_versions": 6,
-    "V1_lifecycle_consistent": true,
-    "V2_all_versions_time_travel_ok": true,
-    "V3_update_sequence_consistent": true,
-    "V4_conflict_detected": true,
-    "V4_last_write_wins": true,
-    "V4_committed_value_ok": true,
-    "V5_deleted_absent_versions": 10,
-    "V5_absence_proof_ok": true
+    "error": "ValueError: mutable CSV needs columns: op,key,value[,version] (op in set/delete)",
+    "source": "real"
   },
   "reorg": {
-    "versions": 8,
-    "finality_depth": 2,
-    "canonical_roots": 8,
-    "abandoned_roots": 1,
-    "R1_finalized_tip_accept": true,
-    "R1_subtrees": 7,
-    "R1_proof_bytes": 1184,
-    "R2_stale_fork_reject": true,
-    "R2_stale_root_detected": true,
-    "R3_nonfinalized_tip_reject": true,
-    "R3_tip_not_final": true,
-    "R4_old_finalized_accept": true
+    "error": "ValueError: fork CSV needs at least one branch=fork row (version,key,value,branch)",
+    "source": "real"
   },
   "compact_cert_curve": [
     {
@@ -1797,13 +625,11 @@
     }
   ],
   "_meta": {
-    "source": "synthetic",
-    "data_path": "",
+    "source": "real",
+    "data_path": "E:/2026-11-10-07-16-37/blockchain_bench/data/real_erc20_flat.csv",
     "workloads": [
-      "evoting",
-      "iot",
       "supplychain"
     ],
-    "n": 10000
+    "n": 5000
   }
 }

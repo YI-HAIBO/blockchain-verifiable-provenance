@@ -1,0 +1,1809 @@
+{
+  "evoting": {
+    "workload": "evoting",
+    "n_records": 5000,
+    "aggregate": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "agg": "per-candidate tally",
+      "covered_records": 2501,
+      "correct": true,
+      "verify_ok": true,
+      "agg_ms": 0.83,
+      "verify_ms": 53.578,
+      "cert_size_bytes": 1040416,
+      "groups": 5,
+      "adversarial": {
+        "honest": true,
+        "forged_value": true,
+        "dropped_record": true,
+        "tampered_record": true,
+        "duplicate_record": true,
+        "reorder_ok": true
+      }
+    },
+    "freshness": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "batch": 500,
+      "batches": 10,
+      "avg_lag_records": 2250.0,
+      "avg_lag_seconds": 17500.0,
+      "max_lag_seconds": 31500,
+      "final_root": "e929b6e45d9bc881"
+    },
+    "lineage": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "prefix": "ballot:",
+      "returned": 5000,
+      "expected": 5000,
+      "complete": true,
+      "no_false_positive": true,
+      "lineage_ok": true
+    },
+    "selectivity": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "points": [
+        {
+          "selectivity": 0.01,
+          "rows": 50,
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.31,
+          "indexer_ms": 0.01
+        },
+        {
+          "selectivity": 0.1,
+          "rows": 500,
+          "hybrid_ms": 0.0,
+          "fullscan_ms": 0.33,
+          "indexer_ms": 0.04
+        },
+        {
+          "selectivity": 0.5,
+          "rows": 2500,
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.39,
+          "indexer_ms": 0.32
+        }
+      ]
+    },
+    "baseline_compare": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "anchor_batch": 1000,
+      "replay_records": 3000,
+      "hybrid_verify": "reject",
+      "hybrid_false_accept": 0.0,
+      "externalDB_verify": "accept",
+      "externalDB_false_accept": 1.0,
+      "indexer_certificate": false,
+      "offchain_certificate": false
+    }
+  },
+  "iot": {
+    "workload": "iot",
+    "n_records": 5000,
+    "aggregate": {
+      "workload": "iot",
+      "n_records": 5000,
+      "agg": "per-sensor average",
+      "covered_records": 2501,
+      "correct": true,
+      "verify_ok": true,
+      "agg_ms": 2.14,
+      "verify_ms": 53.559,
+      "cert_size_bytes": 1040416,
+      "groups": 26,
+      "adversarial": {
+        "honest": true,
+        "forged_value": true,
+        "dropped_record": true,
+        "tampered_record": true,
+        "duplicate_record": true,
+        "reorder_ok": true
+      }
+    },
+    "freshness": {
+      "workload": "iot",
+      "n_records": 5000,
+      "batch": 500,
+      "batches": 10,
+      "avg_lag_records": 2250.0,
+      "avg_lag_seconds": 150000.0,
+      "max_lag_seconds": 270000,
+      "final_root": "856e680177abf4d0"
+    },
+    "lineage": {
+      "workload": "iot",
+      "n_records": 5000,
+      "prefix": "iot:",
+      "returned": 5000,
+      "expected": 5000,
+      "complete": true,
+      "no_false_positive": true,
+      "lineage_ok": true
+    },
+    "selectivity": {
+      "workload": "iot",
+      "n_records": 5000,
+      "points": [
+        {
+          "selectivity": 0.01,
+          "rows": 50,
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.29,
+          "indexer_ms": 0.01
+        },
+        {
+          "selectivity": 0.1,
+          "rows": 500,
+          "hybrid_ms": 0.0,
+          "fullscan_ms": 0.31,
+          "indexer_ms": 0.04
+        },
+        {
+          "selectivity": 0.5,
+          "rows": 2500,
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.36,
+          "indexer_ms": 0.3
+        }
+      ]
+    },
+    "baseline_compare": {
+      "workload": "iot",
+      "n_records": 5000,
+      "anchor_batch": 1000,
+      "replay_records": 3000,
+      "hybrid_verify": "reject",
+      "hybrid_false_accept": 0.0,
+      "externalDB_verify": "accept",
+      "externalDB_false_accept": 1.0,
+      "indexer_certificate": false,
+      "offchain_certificate": false
+    }
+  },
+  "supplychain": {
+    "workload": "supplychain",
+    "n_records": 5000,
+    "aggregate": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "agg": "per-stage count",
+      "covered_records": 2501,
+      "correct": true,
+      "verify_ok": true,
+      "agg_ms": 2.01,
+      "verify_ms": 52.9,
+      "cert_size_bytes": 1040416,
+      "groups": 5,
+      "adversarial": {
+        "honest": true,
+        "forged_value": true,
+        "dropped_record": true,
+        "tampered_record": true,
+        "duplicate_record": true,
+        "reorder_ok": true
+      }
+    },
+    "freshness": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "batch": 500,
+      "batches": 10,
+      "avg_lag_records": 2250.0,
+      "avg_lag_seconds": 9000000.0,
+      "max_lag_seconds": 16200000,
+      "final_root": "79d72657b7f5457b"
+    },
+    "lineage": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "prefix": "sc:",
+      "returned": 5000,
+      "expected": 5000,
+      "complete": true,
+      "no_false_positive": true,
+      "lineage_ok": true
+    },
+    "selectivity": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "points": [
+        {
+          "selectivity": 0.01,
+          "rows": 50,
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.31,
+          "indexer_ms": 0.01
+        },
+        {
+          "selectivity": 0.1,
+          "rows": 500,
+          "hybrid_ms": 0.0,
+          "fullscan_ms": 0.31,
+          "indexer_ms": 0.05
+        },
+        {
+          "selectivity": 0.5,
+          "rows": 2500,
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.36,
+          "indexer_ms": 0.33
+        }
+      ]
+    },
+    "baseline_compare": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "anchor_batch": 1000,
+      "replay_records": 3000,
+      "hybrid_verify": "reject",
+      "hybrid_false_accept": 0.0,
+      "externalDB_verify": "accept",
+      "externalDB_false_accept": 1.0,
+      "indexer_certificate": false,
+      "offchain_certificate": false
+    }
+  },
+  "scaling": {
+    "evoting": {
+      "workload": "evoting",
+      "r_size": 1000,
+      "points": [
+        {
+          "n": 1000,
+          "point_ms": 0.001,
+          "point_ms_sd": 0.001,
+          "range_ms": 0.08,
+          "result_rows": 1000,
+          "verify_ms": 17.09,
+          "verify_ms_sd": 0.67,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 320000,
+          "storage_amp": 3.17
+        },
+        {
+          "n": 10000,
+          "point_ms": 0.002,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.02,
+          "result_rows": 1000,
+          "verify_ms": 22.86,
+          "verify_ms_sd": 0.59,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 448000,
+          "storage_amp": 3.17
+        },
+        {
+          "n": 100000,
+          "point_ms": 0.003,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.01,
+          "result_rows": 1000,
+          "verify_ms": 26.01,
+          "verify_ms_sd": 0.52,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 544000,
+          "storage_amp": 3.17
+        },
+        {
+          "n": 1000000,
+          "point_ms": 0.007,
+          "point_ms_sd": 0.004,
+          "range_ms": 0.02,
+          "result_rows": 1000,
+          "verify_ms": 32.28,
+          "verify_ms_sd": 0.74,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 640000,
+          "storage_amp": 3.17
+        }
+      ]
+    },
+    "iot": {
+      "workload": "iot",
+      "r_size": 1000,
+      "points": [
+        {
+          "n": 1000,
+          "point_ms": 0.001,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.02,
+          "result_rows": 1000,
+          "verify_ms": 16.39,
+          "verify_ms_sd": 0.37,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 320000,
+          "storage_amp": 3.92
+        },
+        {
+          "n": 10000,
+          "point_ms": 0.002,
+          "point_ms_sd": 0.001,
+          "range_ms": 0.01,
+          "result_rows": 1000,
+          "verify_ms": 22.28,
+          "verify_ms_sd": 0.5,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 448000,
+          "storage_amp": 3.92
+        },
+        {
+          "n": 100000,
+          "point_ms": 0.002,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.01,
+          "result_rows": 1000,
+          "verify_ms": 26.75,
+          "verify_ms_sd": 0.33,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 544000,
+          "storage_amp": 3.92
+        },
+        {
+          "n": 1000000,
+          "point_ms": 0.005,
+          "point_ms_sd": 0.002,
+          "range_ms": 0.02,
+          "result_rows": 1000,
+          "verify_ms": 32.23,
+          "verify_ms_sd": 1.53,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 640000,
+          "storage_amp": 3.92
+        }
+      ]
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "r_size": 1000,
+      "points": [
+        {
+          "n": 1000,
+          "point_ms": 0.001,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.02,
+          "result_rows": 1000,
+          "verify_ms": 17.04,
+          "verify_ms_sd": 0.34,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 320000,
+          "storage_amp": 3.09
+        },
+        {
+          "n": 10000,
+          "point_ms": 0.002,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.01,
+          "result_rows": 1000,
+          "verify_ms": 23.21,
+          "verify_ms_sd": 1.07,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 448000,
+          "storage_amp": 3.08
+        },
+        {
+          "n": 100000,
+          "point_ms": 0.003,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.02,
+          "result_rows": 1000,
+          "verify_ms": 30.04,
+          "verify_ms_sd": 3.23,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 544000,
+          "storage_amp": 3.08
+        },
+        {
+          "n": 1000000,
+          "point_ms": 0.01,
+          "point_ms_sd": 0.005,
+          "range_ms": 0.02,
+          "result_rows": 1000,
+          "verify_ms": 30.44,
+          "verify_ms_sd": 1.2,
+          "verify_ok": true,
+          "reps": 3,
+          "cert_size_bytes": 640000,
+          "storage_amp": 3.08
+        }
+      ]
+    }
+  },
+  "multi_seed": {
+    "evoting": {
+      "workload": "evoting",
+      "K": 20,
+      "list_false_accept_max": 0.0,
+      "list_false_accept_avg": 0.0,
+      "aggregate_ok_all_seeds": true,
+      "seeds_ok": 20
+    },
+    "iot": {
+      "workload": "iot",
+      "K": 20,
+      "list_false_accept_max": 0.0,
+      "list_false_accept_avg": 0.0,
+      "aggregate_ok_all_seeds": true,
+      "seeds_ok": 20
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "K": 20,
+      "list_false_accept_max": 0.0,
+      "list_false_accept_avg": 0.0,
+      "aggregate_ok_all_seeds": true,
+      "seeds_ok": 20
+    }
+  },
+  "incremental": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "batch": 500,
+      "batches": 10,
+      "full_rebuild_ms": 40.5,
+      "avg_incremental_ms": 21.8,
+      "max_incremental_ms": 58.7
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "batch": 500,
+      "batches": 10,
+      "full_rebuild_ms": 39.0,
+      "avg_incremental_ms": 20.2,
+      "max_incremental_ms": 37.0
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "batch": 500,
+      "batches": 10,
+      "full_rebuild_ms": 36.3,
+      "avg_incremental_ms": 21.1,
+      "max_incremental_ms": 55.7
+    }
+  },
+  "query_classes": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "point_ms": 0.006,
+      "range_ms": 0.039,
+      "agg_ms": 0.039,
+      "lineage_ms": 0.513,
+      "agg_verify_ms": 59.5,
+      "agg_covered": 2501,
+      "agg_cert_KB": 1016
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "point_ms": 0.007,
+      "range_ms": 0.049,
+      "agg_ms": 0.049,
+      "lineage_ms": 0.407,
+      "agg_verify_ms": 61.6,
+      "agg_covered": 2501,
+      "agg_cert_KB": 1016
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "point_ms": 0.006,
+      "range_ms": 0.041,
+      "agg_ms": 0.041,
+      "lineage_ms": 0.532,
+      "agg_verify_ms": 58.9,
+      "agg_covered": 2501,
+      "agg_cert_KB": 1016
+    }
+  },
+  "range_proof": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "range_rows": 1250,
+      "honest_accept": true,
+      "verify_ok": true,
+      "rejects_drop": true,
+      "rejects_duplicate": true,
+      "rejects_tamper": true,
+      "proof_subtrees": 10,
+      "proof_total_bytes": 2944,
+      "proof_boundary_bytes": 1056,
+      "gen_ms": 0.549,
+      "verify_ms": 5.546
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "range_rows": 1250,
+      "honest_accept": true,
+      "verify_ok": true,
+      "rejects_drop": true,
+      "rejects_duplicate": true,
+      "rejects_tamper": true,
+      "proof_subtrees": 10,
+      "proof_total_bytes": 2944,
+      "proof_boundary_bytes": 1056,
+      "gen_ms": 0.163,
+      "verify_ms": 3.787
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "range_rows": 1250,
+      "honest_accept": true,
+      "verify_ok": true,
+      "rejects_drop": true,
+      "rejects_duplicate": true,
+      "rejects_tamper": true,
+      "proof_subtrees": 10,
+      "proof_total_bytes": 2944,
+      "proof_boundary_bytes": 1056,
+      "gen_ms": 0.352,
+      "verify_ms": 5.55
+    }
+  },
+  "range_proof_scaling": {
+    "evoting": [
+      {
+        "workload": "evoting",
+        "n_records": 1000,
+        "range_rows": 250,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 7,
+        "proof_total_bytes": 1440,
+        "proof_boundary_bytes": 800,
+        "gen_ms": 0.048,
+        "verify_ms": 0.868
+      },
+      {
+        "workload": "evoting",
+        "n_records": 10000,
+        "range_rows": 2500,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 10,
+        "proof_total_bytes": 2944,
+        "proof_boundary_bytes": 1056,
+        "gen_ms": 0.371,
+        "verify_ms": 8.622
+      },
+      {
+        "workload": "evoting",
+        "n_records": 100000,
+        "range_rows": 25000,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 11,
+        "proof_total_bytes": 3008,
+        "proof_boundary_bytes": 1184,
+        "gen_ms": 6.368,
+        "verify_ms": 87.603
+      },
+      {
+        "workload": "evoting",
+        "n_records": 1000000,
+        "range_rows": 250000,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 14,
+        "proof_total_bytes": 4800,
+        "proof_boundary_bytes": 1472,
+        "gen_ms": 94.912,
+        "verify_ms": 865.438
+      }
+    ],
+    "iot": [
+      {
+        "workload": "iot",
+        "n_records": 1000,
+        "range_rows": 250,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 7,
+        "proof_total_bytes": 1440,
+        "proof_boundary_bytes": 800,
+        "gen_ms": 0.052,
+        "verify_ms": 0.807
+      },
+      {
+        "workload": "iot",
+        "n_records": 10000,
+        "range_rows": 2500,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 10,
+        "proof_total_bytes": 2944,
+        "proof_boundary_bytes": 1056,
+        "gen_ms": 0.34,
+        "verify_ms": 8.848
+      },
+      {
+        "workload": "iot",
+        "n_records": 100000,
+        "range_rows": 25000,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 11,
+        "proof_total_bytes": 3008,
+        "proof_boundary_bytes": 1184,
+        "gen_ms": 4.849,
+        "verify_ms": 87.654
+      },
+      {
+        "workload": "iot",
+        "n_records": 1000000,
+        "range_rows": 250000,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 14,
+        "proof_total_bytes": 4800,
+        "proof_boundary_bytes": 1472,
+        "gen_ms": 86.08,
+        "verify_ms": 868.759
+      }
+    ],
+    "supplychain": [
+      {
+        "workload": "supplychain",
+        "n_records": 1000,
+        "range_rows": 250,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 7,
+        "proof_total_bytes": 1440,
+        "proof_boundary_bytes": 800,
+        "gen_ms": 0.048,
+        "verify_ms": 0.8
+      },
+      {
+        "workload": "supplychain",
+        "n_records": 10000,
+        "range_rows": 2500,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 10,
+        "proof_total_bytes": 2944,
+        "proof_boundary_bytes": 1056,
+        "gen_ms": 0.413,
+        "verify_ms": 7.714
+      },
+      {
+        "workload": "supplychain",
+        "n_records": 100000,
+        "range_rows": 25000,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 11,
+        "proof_total_bytes": 3008,
+        "proof_boundary_bytes": 1184,
+        "gen_ms": 6.005,
+        "verify_ms": 90.22
+      },
+      {
+        "workload": "supplychain",
+        "n_records": 1000000,
+        "range_rows": 250000,
+        "honest_accept": true,
+        "verify_ok": true,
+        "rejects_drop": true,
+        "rejects_duplicate": true,
+        "rejects_tamper": true,
+        "proof_subtrees": 14,
+        "proof_total_bytes": 4800,
+        "proof_boundary_bytes": 1472,
+        "gen_ms": 105.459,
+        "verify_ms": 890.899
+      }
+    ]
+  },
+  "versioned": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "batch": 500,
+      "versions": 10,
+      "target_version": 5,
+      "range_rows": 2500,
+      "T1_time_travel_correct": true,
+      "T2_future_forgery_rejected": true,
+      "T3_perrecord_stale_accept": true,
+      "T3_rangeproof_stale_reject": true,
+      "T4_honest_at_target_root": true,
+      "T4_oldroot_replay_rejected": true,
+      "time_travel_ms": 0.007,
+      "time_travel_verify_ms": 4.607
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "batch": 500,
+      "versions": 10,
+      "target_version": 5,
+      "range_rows": 2500,
+      "T1_time_travel_correct": true,
+      "T2_future_forgery_rejected": true,
+      "T3_perrecord_stale_accept": true,
+      "T3_rangeproof_stale_reject": true,
+      "T4_honest_at_target_root": true,
+      "T4_oldroot_replay_rejected": true,
+      "time_travel_ms": 0.006,
+      "time_travel_verify_ms": 4.901
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "batch": 500,
+      "versions": 10,
+      "target_version": 5,
+      "range_rows": 2500,
+      "T1_time_travel_correct": true,
+      "T2_future_forgery_rejected": true,
+      "T3_perrecord_stale_accept": true,
+      "T3_rangeproof_stale_reject": true,
+      "T4_honest_at_target_root": true,
+      "T4_oldroot_replay_rejected": true,
+      "time_travel_ms": 0.006,
+      "time_travel_verify_ms": 5.053
+    }
+  },
+  "mutable_state": {
+    "accounts": 2000,
+    "rounds": 10,
+    "versions": 11,
+    "target_version": 5,
+    "skip_version": 7,
+    "build_ms": 137.2,
+    "latest_value_ok": true,
+    "time_travel_ok": true,
+    "update_replay_rejected": true,
+    "skip_version_rejected": true,
+    "version_bound_not_reusable": true,
+    "point_ms": 0.001,
+    "time_travel_ms": 0.001
+  },
+  "attacks": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "versions": 10,
+      "range_rows": 2501,
+      "boundary_rejected": true,
+      "cross_boundary_rejected": true,
+      "skip_version_honest_at_v3": true,
+      "skip_version_rejected_vs_v5": true
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "versions": 10,
+      "range_rows": 2501,
+      "boundary_rejected": true,
+      "cross_boundary_rejected": true,
+      "skip_version_honest_at_v3": true,
+      "skip_version_rejected_vs_v5": true
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "versions": 10,
+      "range_rows": 2501,
+      "boundary_rejected": true,
+      "cross_boundary_rejected": true,
+      "skip_version_honest_at_v3": true,
+      "skip_version_rejected_vs_v5": true
+    }
+  },
+  "verify_curve": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "points": [
+        {
+          "R": 10,
+          "verify_ms": 0.229,
+          "per_record_ms": 0.0229,
+          "cert_bytes": 4160,
+          "verify_ok": true
+        },
+        {
+          "R": 50,
+          "verify_ms": 1.197,
+          "per_record_ms": 0.0239,
+          "cert_bytes": 20800,
+          "verify_ok": true
+        },
+        {
+          "R": 100,
+          "verify_ms": 3.794,
+          "per_record_ms": 0.0379,
+          "cert_bytes": 41600,
+          "verify_ok": true
+        },
+        {
+          "R": 500,
+          "verify_ms": 10.993,
+          "per_record_ms": 0.022,
+          "cert_bytes": 208000,
+          "verify_ok": true
+        },
+        {
+          "R": 1000,
+          "verify_ms": 23.541,
+          "per_record_ms": 0.0235,
+          "cert_bytes": 416000,
+          "verify_ok": true
+        },
+        {
+          "R": 2500,
+          "verify_ms": 54.096,
+          "per_record_ms": 0.0216,
+          "cert_bytes": 1040000,
+          "verify_ok": true
+        },
+        {
+          "R": 5000,
+          "verify_ms": 111.595,
+          "per_record_ms": 0.0223,
+          "cert_bytes": 2080000,
+          "verify_ok": true
+        }
+      ]
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "points": [
+        {
+          "R": 10,
+          "verify_ms": 0.256,
+          "per_record_ms": 0.0256,
+          "cert_bytes": 4160,
+          "verify_ok": true
+        },
+        {
+          "R": 50,
+          "verify_ms": 1.079,
+          "per_record_ms": 0.0216,
+          "cert_bytes": 20800,
+          "verify_ok": true
+        },
+        {
+          "R": 100,
+          "verify_ms": 1.927,
+          "per_record_ms": 0.0193,
+          "cert_bytes": 41600,
+          "verify_ok": true
+        },
+        {
+          "R": 500,
+          "verify_ms": 9.484,
+          "per_record_ms": 0.019,
+          "cert_bytes": 208000,
+          "verify_ok": true
+        },
+        {
+          "R": 1000,
+          "verify_ms": 25.871,
+          "per_record_ms": 0.0259,
+          "cert_bytes": 416000,
+          "verify_ok": true
+        },
+        {
+          "R": 2500,
+          "verify_ms": 56.556,
+          "per_record_ms": 0.0226,
+          "cert_bytes": 1040000,
+          "verify_ok": true
+        },
+        {
+          "R": 5000,
+          "verify_ms": 105.62,
+          "per_record_ms": 0.0211,
+          "cert_bytes": 2080000,
+          "verify_ok": true
+        }
+      ]
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "points": [
+        {
+          "R": 10,
+          "verify_ms": 0.211,
+          "per_record_ms": 0.0211,
+          "cert_bytes": 4160,
+          "verify_ok": true
+        },
+        {
+          "R": 50,
+          "verify_ms": 1.326,
+          "per_record_ms": 0.0265,
+          "cert_bytes": 20800,
+          "verify_ok": true
+        },
+        {
+          "R": 100,
+          "verify_ms": 2.859,
+          "per_record_ms": 0.0286,
+          "cert_bytes": 41600,
+          "verify_ok": true
+        },
+        {
+          "R": 500,
+          "verify_ms": 9.444,
+          "per_record_ms": 0.0189,
+          "cert_bytes": 208000,
+          "verify_ok": true
+        },
+        {
+          "R": 1000,
+          "verify_ms": 22.617,
+          "per_record_ms": 0.0226,
+          "cert_bytes": 416000,
+          "verify_ok": true
+        },
+        {
+          "R": 2500,
+          "verify_ms": 51.766,
+          "per_record_ms": 0.0207,
+          "cert_bytes": 1040000,
+          "verify_ok": true
+        },
+        {
+          "R": 5000,
+          "verify_ms": 104.204,
+          "per_record_ms": 0.0208,
+          "cert_bytes": 2080000,
+          "verify_ok": true
+        }
+      ]
+    }
+  },
+  "portable_verify": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "range_rows": 2501,
+      "verifier_input_bytes": 87272,
+      "verifier_peak_bytes": 339950,
+      "verifier_peak_point_bytes": 636,
+      "fullscan_input_bytes": 147500,
+      "verifier_input_vs_fullscan": 0.5917,
+      "range_ok": true,
+      "point_ok": true
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "range_rows": 2501,
+      "verifier_input_bytes": 68264,
+      "verifier_peak_bytes": 340014,
+      "verifier_peak_point_bytes": 636,
+      "fullscan_input_bytes": 109500,
+      "verifier_input_vs_fullscan": 0.6234,
+      "range_ok": true,
+      "point_ok": true
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "range_rows": 2501,
+      "verifier_input_bytes": 90488,
+      "verifier_peak_bytes": 340014,
+      "verifier_peak_point_bytes": 636,
+      "fullscan_input_bytes": 153928,
+      "verifier_input_vs_fullscan": 0.5879,
+      "range_ok": true,
+      "point_ok": true
+    }
+  },
+  "lineage_verify": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "prefix": "ballot:",
+      "lineage_nodes": 5000,
+      "honest_accept": true,
+      "rejects_drop_node": true,
+      "rejects_duplicate_node": true,
+      "rejects_tamper": true,
+      "proof_subtrees": 5,
+      "proof_boundary_bytes": 448,
+      "query_ms": 0.385,
+      "verify_ms": 19.799
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "prefix": "iot:",
+      "lineage_nodes": 5000,
+      "honest_accept": true,
+      "rejects_drop_node": true,
+      "rejects_duplicate_node": true,
+      "rejects_tamper": true,
+      "proof_subtrees": 5,
+      "proof_boundary_bytes": 448,
+      "query_ms": 0.314,
+      "verify_ms": 17.913
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "prefix": "sc:",
+      "lineage_nodes": 5000,
+      "honest_accept": true,
+      "rejects_drop_node": true,
+      "rejects_duplicate_node": true,
+      "rejects_tamper": true,
+      "proof_subtrees": 5,
+      "proof_boundary_bytes": 448,
+      "query_ms": 0.363,
+      "verify_ms": 16.299
+    }
+  },
+  "concurrent": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "batch": 500,
+      "steps": 9,
+      "verify_ok_all_steps": true,
+      "avg_query_ms": 2.036,
+      "max_query_ms": 3.722,
+      "static_query_ms": 1.803,
+      "static_ok": true
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "batch": 500,
+      "steps": 9,
+      "verify_ok_all_steps": true,
+      "avg_query_ms": 1.678,
+      "max_query_ms": 2.037,
+      "static_query_ms": 1.638,
+      "static_ok": true
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "batch": 500,
+      "steps": 9,
+      "verify_ok_all_steps": true,
+      "avg_query_ms": 1.848,
+      "max_query_ms": 2.69,
+      "static_query_ms": 1.764,
+      "static_ok": true
+    }
+  },
+  "highfidelity": {
+    "tx_logs": {
+      "n": 5000,
+      "contracts": 64,
+      "aggregate_ok": true,
+      "groups": 32,
+      "range_proof_honest": true,
+      "range_proof_drop_rejected": true,
+      "time_travel_ok": true,
+      "versions": 10,
+      "lineage_ok": true,
+      "lineage_nodes": 78,
+      "lineage_proof_subtrees": 4,
+      "lineage_proof_boundary_bytes": 480
+    },
+    "state": {
+      "accounts": 2000,
+      "versions": 11,
+      "latest_value_ok": true,
+      "time_travel_ok": true,
+      "update_replay_rejected": true
+    }
+  },
+  "delete_semantics": {
+    "accounts": 2000,
+    "rounds": 10,
+    "versions": 11,
+    "live_at_latest": 1800,
+    "deleted_at_latest": 200,
+    "build_ms": 119.9,
+    "N1_live_state_ok": true,
+    "N2_absent_query": true,
+    "N2_nonmembership_ok": true,
+    "N3_time_travel_predel_ok": true,
+    "N4_delete_replay_rejected": true,
+    "N5_value_restored": true,
+    "N5_recovery_accepted": true,
+    "N5_predel_replay_rejected": true
+  },
+  "batch_verify": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "points": [
+        {
+          "K": 10,
+          "individual_ms": 0.221,
+          "per_record_individual_ms": 0.02212,
+          "batched_ms": 0.089,
+          "per_record_batched_ms": 0.00886,
+          "amortization_ratio": 2.5,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 50,
+          "individual_ms": 0.953,
+          "per_record_individual_ms": 0.01906,
+          "batched_ms": 0.26,
+          "per_record_batched_ms": 0.0052,
+          "amortization_ratio": 3.67,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 100,
+          "individual_ms": 2.684,
+          "per_record_individual_ms": 0.02684,
+          "batched_ms": 0.53,
+          "per_record_batched_ms": 0.0053,
+          "amortization_ratio": 5.06,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 500,
+          "individual_ms": 9.794,
+          "per_record_individual_ms": 0.01959,
+          "batched_ms": 1.67,
+          "per_record_batched_ms": 0.00334,
+          "amortization_ratio": 5.86,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 1000,
+          "individual_ms": 23.739,
+          "per_record_individual_ms": 0.02374,
+          "batched_ms": 3.625,
+          "per_record_batched_ms": 0.00362,
+          "amortization_ratio": 6.55,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 5000,
+          "individual_ms": 105.37,
+          "per_record_individual_ms": 0.02107,
+          "batched_ms": 18.221,
+          "per_record_batched_ms": 0.00364,
+          "amortization_ratio": 5.78,
+          "individual_ok": true,
+          "batched_ok": true
+        }
+      ]
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "points": [
+        {
+          "K": 10,
+          "individual_ms": 0.216,
+          "per_record_individual_ms": 0.02164,
+          "batched_ms": 0.088,
+          "per_record_batched_ms": 0.00884,
+          "amortization_ratio": 2.45,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 50,
+          "individual_ms": 0.953,
+          "per_record_individual_ms": 0.01906,
+          "batched_ms": 0.262,
+          "per_record_batched_ms": 0.00524,
+          "amortization_ratio": 3.64,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 100,
+          "individual_ms": 1.899,
+          "per_record_individual_ms": 0.01899,
+          "batched_ms": 0.414,
+          "per_record_batched_ms": 0.00414,
+          "amortization_ratio": 4.59,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 500,
+          "individual_ms": 11.727,
+          "per_record_individual_ms": 0.02345,
+          "batched_ms": 1.674,
+          "per_record_batched_ms": 0.00335,
+          "amortization_ratio": 7.0,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 1000,
+          "individual_ms": 21.324,
+          "per_record_individual_ms": 0.02132,
+          "batched_ms": 6.166,
+          "per_record_batched_ms": 0.00617,
+          "amortization_ratio": 3.46,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 5000,
+          "individual_ms": 111.987,
+          "per_record_individual_ms": 0.0224,
+          "batched_ms": 16.313,
+          "per_record_batched_ms": 0.00326,
+          "amortization_ratio": 6.86,
+          "individual_ok": true,
+          "batched_ok": true
+        }
+      ]
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "points": [
+        {
+          "K": 10,
+          "individual_ms": 0.214,
+          "per_record_individual_ms": 0.02139,
+          "batched_ms": 0.087,
+          "per_record_batched_ms": 0.00875,
+          "amortization_ratio": 2.44,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 50,
+          "individual_ms": 1.126,
+          "per_record_individual_ms": 0.02252,
+          "batched_ms": 0.261,
+          "per_record_batched_ms": 0.00522,
+          "amortization_ratio": 4.32,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 100,
+          "individual_ms": 1.892,
+          "per_record_individual_ms": 0.01892,
+          "batched_ms": 0.466,
+          "per_record_batched_ms": 0.00466,
+          "amortization_ratio": 4.06,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 500,
+          "individual_ms": 11.224,
+          "per_record_individual_ms": 0.02245,
+          "batched_ms": 1.63,
+          "per_record_batched_ms": 0.00326,
+          "amortization_ratio": 6.88,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 1000,
+          "individual_ms": 22.087,
+          "per_record_individual_ms": 0.02209,
+          "batched_ms": 4.907,
+          "per_record_batched_ms": 0.00491,
+          "amortization_ratio": 4.5,
+          "individual_ok": true,
+          "batched_ok": true
+        },
+        {
+          "K": 5000,
+          "individual_ms": 109.675,
+          "per_record_individual_ms": 0.02193,
+          "batched_ms": 20.314,
+          "per_record_batched_ms": 0.00406,
+          "amortization_ratio": 5.4,
+          "individual_ok": true,
+          "batched_ok": true
+        }
+      ]
+    }
+  },
+  "compact_aggregate": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "covered": 2501,
+      "groups": 5,
+      "per_record_cert_bytes": 1040416,
+      "compact_cert_bytes": 3880,
+      "compression_ratio": 268.1,
+      "compact_subtrees": 13,
+      "aggregate_equal": true,
+      "compact_verify_ok": true,
+      "compact_verify_ms": 0.211,
+      "forged_value_rejected": true,
+      "dropped_subtree_rejected": true
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "covered": 2501,
+      "groups": 26,
+      "per_record_cert_bytes": 1040416,
+      "compact_cert_bytes": 3760,
+      "compression_ratio": 276.7,
+      "compact_subtrees": 13,
+      "aggregate_equal": true,
+      "compact_verify_ok": true,
+      "compact_verify_ms": 0.198,
+      "forged_value_rejected": true,
+      "dropped_subtree_rejected": true
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "covered": 2501,
+      "groups": 5,
+      "per_record_cert_bytes": 1040416,
+      "compact_cert_bytes": 3872,
+      "compression_ratio": 268.7,
+      "compact_subtrees": 13,
+      "aggregate_equal": true,
+      "compact_verify_ok": true,
+      "compact_verify_ms": 0.192,
+      "forged_value_rejected": true,
+      "dropped_subtree_rejected": true
+    }
+  },
+  "aggregate_coverage": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "covered": 2501,
+      "honest_coverage_ok": true,
+      "subset_aggregate_accept": true,
+      "subset_crossverify_reject": true,
+      "superset_aggregate_accept": true,
+      "superset_crossverify_reject": true
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "covered": 2501,
+      "honest_coverage_ok": true,
+      "subset_aggregate_accept": true,
+      "subset_crossverify_reject": true,
+      "superset_aggregate_accept": true,
+      "superset_crossverify_reject": true
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "covered": 2501,
+      "honest_coverage_ok": true,
+      "subset_aggregate_accept": true,
+      "subset_crossverify_reject": true,
+      "superset_aggregate_accept": true,
+      "superset_crossverify_reject": true
+    }
+  },
+  "quorum": {
+    "evoting": {
+      "workload": "evoting",
+      "n_records": 5000,
+      "points": [
+        {
+          "servers": 3,
+          "f_honest_majority": 1,
+          "threshold": 2,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 162.249,
+          "single_verify_ms": 53.417,
+          "quorum_overhead": 3.0
+        },
+        {
+          "servers": 5,
+          "f_honest_majority": 2,
+          "threshold": 3,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 272.244,
+          "single_verify_ms": 53.417,
+          "quorum_overhead": 5.1
+        },
+        {
+          "servers": 7,
+          "f_honest_majority": 3,
+          "threshold": 4,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 379.472,
+          "single_verify_ms": 53.417,
+          "quorum_overhead": 7.1
+        }
+      ]
+    },
+    "iot": {
+      "workload": "iot",
+      "n_records": 5000,
+      "points": [
+        {
+          "servers": 3,
+          "f_honest_majority": 1,
+          "threshold": 2,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 168.256,
+          "single_verify_ms": 53.342,
+          "quorum_overhead": 3.2
+        },
+        {
+          "servers": 5,
+          "f_honest_majority": 2,
+          "threshold": 3,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 267.345,
+          "single_verify_ms": 53.342,
+          "quorum_overhead": 5.0
+        },
+        {
+          "servers": 7,
+          "f_honest_majority": 3,
+          "threshold": 4,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 380.921,
+          "single_verify_ms": 53.342,
+          "quorum_overhead": 7.1
+        }
+      ]
+    },
+    "supplychain": {
+      "workload": "supplychain",
+      "n_records": 5000,
+      "points": [
+        {
+          "servers": 3,
+          "f_honest_majority": 1,
+          "threshold": 2,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 160.749,
+          "single_verify_ms": 54.818,
+          "quorum_overhead": 2.9
+        },
+        {
+          "servers": 5,
+          "f_honest_majority": 2,
+          "threshold": 3,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 278.461,
+          "single_verify_ms": 54.818,
+          "quorum_overhead": 5.1
+        },
+        {
+          "servers": 7,
+          "f_honest_majority": 3,
+          "threshold": 4,
+          "X1_all_honest_accept": true,
+          "X2_malicious_subset_honest_wins": true,
+          "X3_malicious_forge_excluded": true,
+          "X4_malicious_offline_ok": true,
+          "X5_malicious_majority_defeats": true,
+          "quorum_verify_ms": 384.759,
+          "single_verify_ms": 54.818,
+          "quorum_overhead": 7.0
+        }
+      ]
+    }
+  },
+  "dynamic_consistency": {
+    "accounts": 2000,
+    "rounds": 10,
+    "versions": 11,
+    "lifecycle_key": "acct:00000000",
+    "lifecycle_present_versions": 6,
+    "V1_lifecycle_consistent": true,
+    "V2_all_versions_time_travel_ok": true,
+    "V3_update_sequence_consistent": true,
+    "V4_conflict_detected": true,
+    "V4_last_write_wins": true,
+    "V4_committed_value_ok": true,
+    "V5_deleted_absent_versions": 10,
+    "V5_absence_proof_ok": true
+  },
+  "reorg": {
+    "versions": 8,
+    "finality_depth": 2,
+    "canonical_roots": 8,
+    "abandoned_roots": 1,
+    "R1_finalized_tip_accept": true,
+    "R1_subtrees": 7,
+    "R1_proof_bytes": 1184,
+    "R2_stale_fork_reject": true,
+    "R2_stale_root_detected": true,
+    "R3_nonfinalized_tip_reject": true,
+    "R3_tip_not_final": true,
+    "R4_old_finalized_accept": true
+  },
+  "compact_cert_curve": [
+    {
+      "n": 1000,
+      "groups": 4,
+      "covered": 501,
+      "subtrees": 10,
+      "cert_bytes": 2344,
+      "compression_x": 70.1,
+      "verify_ok": true
+    },
+    {
+      "n": 1000,
+      "groups": 8,
+      "covered": 501,
+      "subtrees": 10,
+      "cert_bytes": 2504,
+      "compression_x": 65.6,
+      "verify_ok": true
+    },
+    {
+      "n": 1000,
+      "groups": 16,
+      "covered": 501,
+      "subtrees": 10,
+      "cert_bytes": 2760,
+      "compression_x": 59.5,
+      "verify_ok": true
+    },
+    {
+      "n": 1000,
+      "groups": 32,
+      "covered": 501,
+      "subtrees": 10,
+      "cert_bytes": 3272,
+      "compression_x": 50.2,
+      "verify_ok": true
+    },
+    {
+      "n": 1000,
+      "groups": 64,
+      "covered": 501,
+      "subtrees": 10,
+      "cert_bytes": 4040,
+      "compression_x": 40.7,
+      "verify_ok": true
+    },
+    {
+      "n": 10000,
+      "groups": 4,
+      "covered": 5001,
+      "subtrees": 13,
+      "cert_bytes": 3880,
+      "compression_x": 587.7,
+      "verify_ok": true
+    },
+    {
+      "n": 10000,
+      "groups": 8,
+      "covered": 5001,
+      "subtrees": 13,
+      "cert_bytes": 4200,
+      "compression_x": 543.0,
+      "verify_ok": true
+    },
+    {
+      "n": 10000,
+      "groups": 16,
+      "covered": 5001,
+      "subtrees": 13,
+      "cert_bytes": 4712,
+      "compression_x": 484.0,
+      "verify_ok": true
+    },
+    {
+      "n": 10000,
+      "groups": 32,
+      "covered": 5001,
+      "subtrees": 13,
+      "cert_bytes": 5608,
+      "compression_x": 406.6,
+      "verify_ok": true
+    },
+    {
+      "n": 10000,
+      "groups": 64,
+      "covered": 5001,
+      "subtrees": 13,
+      "cert_bytes": 7144,
+      "compression_x": 319.2,
+      "verify_ok": true
+    },
+    {
+      "n": 100000,
+      "groups": 4,
+      "covered": 50001,
+      "subtrees": 16,
+      "cert_bytes": 5416,
+      "compression_x": 5096.1,
+      "verify_ok": true
+    },
+    {
+      "n": 100000,
+      "groups": 8,
+      "covered": 50001,
+      "subtrees": 16,
+      "cert_bytes": 5896,
+      "compression_x": 4681.2,
+      "verify_ok": true
+    },
+    {
+      "n": 100000,
+      "groups": 16,
+      "covered": 50001,
+      "subtrees": 16,
+      "cert_bytes": 6728,
+      "compression_x": 4102.3,
+      "verify_ok": true
+    },
+    {
+      "n": 100000,
+      "groups": 32,
+      "covered": 50001,
+      "subtrees": 16,
+      "cert_bytes": 8136,
+      "compression_x": 3392.4,
+      "verify_ok": true
+    },
+    {
+      "n": 100000,
+      "groups": 64,
+      "covered": 50001,
+      "subtrees": 16,
+      "cert_bytes": 10696,
+      "compression_x": 2580.5,
+      "verify_ok": true
+    },
+    {
+      "n": 1000000,
+      "groups": 4,
+      "covered": 500001,
+      "subtrees": 19,
+      "cert_bytes": 6984,
+      "compression_x": 46391.8,
+      "verify_ok": true
+    },
+    {
+      "n": 1000000,
+      "groups": 8,
+      "covered": 500001,
+      "subtrees": 19,
+      "cert_bytes": 7560,
+      "compression_x": 42857.2,
+      "verify_ok": true
+    },
+    {
+      "n": 1000000,
+      "groups": 16,
+      "covered": 500001,
+      "subtrees": 19,
+      "cert_bytes": 8712,
+      "compression_x": 37190.2,
+      "verify_ok": true
+    },
+    {
+      "n": 1000000,
+      "groups": 32,
+      "covered": 500001,
+      "subtrees": 19,
+      "cert_bytes": 10760,
+      "compression_x": 30111.6,
+      "verify_ok": true
+    },
+    {
+      "n": 1000000,
+      "groups": 64,
+      "covered": 500001,
+      "subtrees": 19,
+      "cert_bytes": 14344,
+      "compression_x": 22587.9,
+      "verify_ok": true
+    }
+  ],
+  "_meta": {
+    "source": "synthetic",
+    "data_path": "",
+    "workloads": [
+      "evoting",
+      "iot",
+      "supplychain"
+    ],
+    "n": 5000
+  }
+}
