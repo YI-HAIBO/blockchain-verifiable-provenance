@@ -1,0 +1,18 @@
+{
+  "workload": "iot",
+  "n_records": 2500,
+  "latency_ms": {
+    "hybrid_point": 0.01,
+    "hybrid_range": 0.01,
+    "hybrid_lineage": 0.13,
+    "full_scan": 0.19,
+    "offchain": 0.18
+  },
+  "verify_ms": 27.282,
+  "cert_size_bytes": 480384,
+  "storage_amp": 3.93,
+  "false_accept_hybrid": 0.0,
+  "false_accept_offchain": 1.0,
+  "soundness_ok": true,
+  "forgery_rejected": 20
+}
