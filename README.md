@@ -22,6 +22,15 @@ Processing over Blockchain-Backed Databases* (Sections 3-4).
 python run_eval.py --workload evoting     --n 2500
 python run_eval.py --workload iot         --n 5000
 python run_eval.py --workload supplychain --n 4000
+
+# Full evaluation harness (all dimensions, 3-run mean ± SD, scaling to 1e6)
+python run_full_eval.py --all --n 10000
+
+# Real chain data (M1): one export away from a real-chain experiment
+python run_full_eval.py --source real --data-path erc20_transfers.csv --n 10000 --all
+#   -> flat measures run on the CSV; versioned/mutable/fork experiments need the
+#      CSV schemas in 真实链数据导出字段规范.md (they degrade to a clear error
+#      dict until you provide them).
 ```
 
 ## What it demonstrates (expected)
@@ -47,8 +56,12 @@ python run_eval.py --workload supplychain --n 4000
 - Figures are generated reproducibly: `python3 figures/generate_figures.py`
   (requires `matplotlib`), producing `figures/fig_architecture.png` and
   `figures/fig_cover.png` as referenced by the paper.
-- To use a real chain, plug a client that reads committed transactions into
-  `HybridIndex` instead of the in-memory generator.
+- To use a real chain, export it to a CSV per `真实链数据导出字段规范.md` and run
+  `run_full_eval.py --source real --data-path <csv>`. The flat schema (A) covers
+  every stateless experiment; versioned (B), mutable-op (C), and fork (D) schemas
+  cover time-travel / reorg / mutable-state experiments. `data_source.py` detects
+  the CSV flavour from its header and raises an actionable error otherwise — it
+  never silently falls back to synthetic traces.
 - **Prototype scope**: in-memory, pure-stdlib implementation (no storage engine,
   no disk I/O); sha256 hashing. It demonstrates the verifiable-query mechanisms
   and their adversarial guarantees, not a production indexing system.

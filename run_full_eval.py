@@ -30,6 +30,24 @@ from workloads import WORKLOADS, mutable_state
 from hybrid import (HybridIndex, FullScan, OffchainOnly, StandardIndexer,
                     ExternalDBBaseline)
 from adversarial import extended_soundness_test, aggregate_soundness_test
+import data_source as ds
+
+# --------------------------------------------------------------------------- #
+# Data-source switch. Default: high-fidelity synthetic traces (paper numbers).
+# With ``--source real --data-path <csv>`` every *stateless* measure reads real
+# chain exports through :mod:`data_source`; the versioned / mutable / fork
+# measures use the specialized adapters (see 真实链数据导出字段规范.md).
+# --------------------------------------------------------------------------- #
+_SOURCE = "synthetic"
+_DATA_PATH = None
+
+
+def load_records(name, n):
+    """Record list for ``name`` sized to ``n`` (synthetic or real)."""
+    if _SOURCE == "real":
+        return ds.get_data_source("real", path=_DATA_PATH).records(n, name)
+    return WORKLOADS[name](n)
+
 
 OUT = Path(__file__).resolve().parent / "results"
 OUT.mkdir(exist_ok=True)
@@ -71,7 +89,7 @@ def timed(fn):
 
 def measure_aggregate(name, n):
     """Range aggregation + verifiable certificate + adversarial soundness."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     spec = AGGREGATES[name]
     k1, k2 = recs[n // 4][0], recs[3 * n // 4][0]
@@ -118,7 +136,7 @@ def measure_aggregate(name, n):
 
 def measure_freshness(name, n, batch):
     """Batch-incremental sync: how far the index lags the chain tip."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
 
     # Timestamp is in the value (evoting) or in the key's last segment
     # (iot / supplychain: key = "<prefix>:<id>:<ts>").
@@ -162,7 +180,7 @@ def measure_scaling(name, n_list, r_size=1000, reps=3):
     representative and can appear non-monotonic)."""
     out = []
     for n in n_list:
-        recs = WORKLOADS[name](n)
+        recs = load_records(name, n)
         h = HybridIndex(recs)
         data_size = sum(len(k) + len(v) for k, v in recs)
         tree_bytes = sum(len(node) for level in h.tree.level for node in level)
@@ -208,7 +226,7 @@ def measure_scaling(name, n_list, r_size=1000, reps=3):
 
 def measure_lineage(name, n):
     """Lineage correctness: complete, no false positives."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     prefix = recs[0][0].split(":")[0] + ":"
     res, _ = timed(lambda: h.query_lineage(prefix))
@@ -225,7 +243,7 @@ def measure_lineage(name, n):
 
 def measure_selectivity(name, n, fracs=(0.01, 0.10, 0.50)):
     """Range latency vs selectivity for hybrid, full-scan, indexer."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     fs = FullScan(recs)
     ix = StandardIndexer(recs)
@@ -250,7 +268,7 @@ def measure_baseline_compare(name, n):
     correctly? The hybrid index verifies every record against the LATEST root
     (rejects the replay); VQL/EtherQL-style whole-DB fingerprint accepts any
     historical anchor (false-accept); indexer/off-chain have no certificate."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     anchor_batch = max(100, n // 5)
     ext = ExternalDBBaseline(recs, anchor_batch)
@@ -288,7 +306,7 @@ def measure_baseline_compare(name, n):
 
 def measure_incremental(name, n, batch):
     """Incremental maintenance cost: per-batch rebuild vs one full rebuild."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     t0 = time.perf_counter()
     HybridIndex(recs)
     full_ms = (time.perf_counter() - t0) * 1000
@@ -319,7 +337,7 @@ def measure_multi_seed(name, n, K=20):
     agg_ok = []
     for k in range(K):
         nn = max(1000, n - k * (n // (K + 1)))
-        recs = WORKLOADS[name](nn)
+        recs = load_records(name, nn)
         h = HybridIndex(recs)
         probe = [recs[i][0] for i in range(0, nn, max(1, nn // 20))][:20]
         ad = extended_soundness_test(h, probe)
@@ -344,7 +362,7 @@ def measure_multi_seed(name, n, K=20):
 def measure_query_classes(name, n):
     """All query classes (point / range / aggregate / lineage): latency and
     verification cost in one table."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     spec = AGGREGATES[name]
     mid = n // 2
@@ -377,7 +395,7 @@ def measure_range_proof(name, n, frac=0.25):
     value are all rejected. Proof size decomposes into O(log n) canonical
     subtrees; the boundary (distinct) hash set is the compressible O(log n)
     form, versus the naive O(log^2 n) per-subtree sibling-path encoding."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     span = max(1, int(n * frac))
     lo = max(0, n // 2 - span // 2)
@@ -431,10 +449,19 @@ def measure_versioned(name, n, batch):
       (completeness gap closed).
     * T4 old-root replay: an answer certified against a historical root is
       rejected when verified against the latest root."""
-    recs = WORKLOADS[name](n)
-    h = HybridIndex(recs[:batch])
-    for s in range(batch, n, batch):
-        h.append_batch(recs[s:s + batch])
+    if _SOURCE == "real":
+        init, batches = ds.get_data_source("real", path=_DATA_PATH).versioned_batches(name, n)
+        recs = init + [r for b in batches for r in b]
+        n = len(recs)
+        batch = max(1, len(init))
+        h = HybridIndex(init)
+        for b in batches:
+            h.append_batch(b)
+    else:
+        recs = load_records(name, n)
+        h = HybridIndex(recs[:batch])
+        for s in range(batch, n, batch):
+            h.append_batch(recs[s:s + batch])
     m = h.version_count()
     vj = max(1, m // 2)
     lo = max(0, n // 2 - n // 4)
@@ -500,6 +527,39 @@ def measure_mutable(n_accounts=2000, rounds=10, update_frac=0.5):
     root; a SKIP-VERSION certificate (v_j cert vs a later root) is rejected;
     and certificates are VERSION-BOUND (a v_j path never reconstructs a later
     root, even if the value is unchanged)."""
+    if _SOURCE == "real":
+        initial, batches = ds.get_data_source(
+            "real", path=_DATA_PATH).mutable_batches(n_accounts, name="evoting")
+        h = HybridIndex(initial)
+        for b in batches:
+            h.apply_updates(b)
+        m = h.version_count()
+        acct = h.keys[len(h.keys) // 2] if h.keys else None
+        v_old = max(1, m // 2)
+        v_skip = min(m, v_old + 2)
+        latest = h.query_point(acct) if acct else None
+        old = h.query_point_at(acct, v_old) if acct else None
+        def _ok(rec, root):
+            return rec is not None and HybridIndex.verify_result(
+                h.certificate([rec]), root) if rec is not None else False
+        replay_rej = False
+        if acct and old is not None:
+            replay_rej = not HybridIndex.verify_result(
+                [(acct, old[1], h.paths.get(acct, []))], h.root)
+        skip_rej = False
+        if acct and old is not None:
+            skip_rej = not HybridIndex.verify_result(
+                h.certificate_at([old], v_old), h.root_at(v_skip))
+        return {
+            "accounts": len(initial), "rounds": len(batches), "versions": m,
+            "target_version": v_old, "skip_version": v_skip,
+            "build_ms": None, "latest_value_ok": _ok(latest, h.root),
+            "time_travel_ok": _ok(old, h.root_at(v_old)),
+            "update_replay_rejected": replay_rej,
+            "skip_version_rejected": skip_rej,
+            "version_bound_not_reusable": None,
+            "point_ms": None, "time_travel_ms": None, "source": "real",
+        }
     initial, batches = mutable_state(n_accounts, rounds, update_frac)
     t0 = time.perf_counter()
     h = HybridIndex(initial)
@@ -564,9 +624,46 @@ def measure_delete_semantics(n_accounts=2000, rounds=10, update_frac=0.5,
       the latest root (the record is no longer in the state tree).
     * N5 genuine recovery: a re-inserted account's current value verifies
       (accepted); its pre-deletion certificate does NOT (version binding, even
-      when the restored value equals the pre-deletion value), so a recovery is
-      distinguishable from a replay."""
+    when the restored value equals the pre-deletion value), so a recovery is
+    distinguishable from a replay."""
     from workloads import mutable_state_tristate
+    if _SOURCE == "real":
+        initial, batches = ds.get_data_source(
+            "real", path=_DATA_PATH).tristate_batches(n_accounts, name="evoting")
+        h = HybridIndex(initial)
+        for b in batches:
+            h.apply_mutations(b)
+        m = h.version_count()
+        latest_keys = set(h.keys)
+        deleted_keys = [k for k, _ in initial if k not in latest_keys]
+        dk = deleted_keys[0] if deleted_keys else None
+        n1_ok = n2_ok = n3_ok = n4_rej = False
+        if latest_keys:
+            lk = sorted(latest_keys)[0]
+            n1_ok = HybridIndex.verify_result(
+                h.certificate([h.query_point(lk)]), h.root)
+        if dk:
+            v_pre = max(v for v in range(1, m + 1)
+                        if dk in set(h.history[v - 1]["keys"]))
+            n2_ok = h.query_point(dk) is None
+            nm = h.nonmembership_proof(dk)
+            n2_ok = n2_ok and nm is not None and \
+                HybridIndex.verify_nonmembership(nm, h.root)
+            pre = h.query_point_at(dk, v_pre)
+            n3_ok = HybridIndex.verify_result(
+                h.certificate_at([pre], v_pre), h.root_at(v_pre))
+            n4_rej = not HybridIndex.verify_result(
+                h.certificate_at([pre], v_pre), h.root)
+        return {
+            "accounts": len(initial), "rounds": len(batches), "versions": m,
+            "live_at_latest": len(latest_keys),
+            "deleted_at_latest": len(deleted_keys), "build_ms": None,
+            "N1_live_state_ok": n1_ok, "N2_absent_query": dk is not None,
+            "N2_nonmembership_ok": n2_ok, "N3_time_travel_predel_ok": n3_ok,
+            "N4_delete_replay_rejected": n4_rej,
+            "N5_value_restored": None, "N5_recovery_accepted": None,
+            "N5_predel_replay_rejected": None, "source": "real",
+        }
     initial, batches = mutable_state_tristate(n_accounts, rounds, update_frac,
                                               delete_frac)
     t0 = time.perf_counter()
@@ -653,7 +750,7 @@ def measure_batch_verify(name, n, sizes=(10, 50, 100, 500, 1000, 5000)):
     (individual / batched), which grows with K: the batched per-record cost
     tends toward a constant as K grows, i.e. the O(log n) per-record
     verification overhead is amortized away for bulk audits."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     out = []
     for k in sizes:
@@ -693,7 +790,7 @@ def measure_compact_aggregate(name, n):
     each carrying its OWN aggregate map, so the certificate is
     O(log n x |groups|). Reports the size reduction and verifies the compact
     certificate is sound (reproduces the same aggregate)."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     spec = AGGREGATES[name]
     k1, k2 = recs[n // 4][0], recs[3 * n // 4][0]
@@ -754,7 +851,7 @@ def measure_aggregate_coverage(name, n):
     the authenticated range proof (the covered set must equal the full range
     set) closes the gap: the subset / superset aggregate is REJECTED
     (false-accept = 0)."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     spec = AGGREGATES[name]
     k1, k2 = recs[n // 4][0], recs[3 * n // 4][0]
@@ -859,7 +956,7 @@ def measure_quorum(name, n, n_servers_list=(3, 5, 7)):
     * X5 malicious majority: quorum accepts the (wrong) consensus --- the
       fundamental honest-majority requirement of quorum/BFT verification.
     * Quorum cost vs single-server verification (n x + majority comparison)."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     k1, k2 = recs[n // 4][0], recs[3 * n // 4][0]
     true_res = h.query_range(k1, k2)
@@ -921,7 +1018,7 @@ def measure_attacks(name, n, batch):
     * cross-boundary cover: the canonical cover tiles a larger span.
     * skip-version range: a v_j range certificate verified against a later
       root (records in the range changed between versions -> reject)."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs[:batch])
     for s in range(batch, n, batch):
         h.append_batch(recs[s:s + batch])
@@ -966,7 +1063,7 @@ def measure_verify_curve(name, n, sizes=(10, 50, 100, 500, 1000, 2500, 5000)):
     """G: verification cost vs result size |R| (fixed n). Shows the
     per-record verification cost is O(log n) (nearly constant as |R| grows),
     i.e., total verify is O(|R| log n)."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     out = []
     for r in sizes:
@@ -996,7 +1093,7 @@ def measure_portable_verify(name, n):
     not on n. Contrasted with a full-chain-scan verifier, which must materialize
     all n records."""
     import tracemalloc
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     k1, k2 = recs[n // 4][0], recs[3 * n // 4][0]
 
@@ -1038,7 +1135,7 @@ def measure_lineage_verify(name, n):
     contiguous, so the range proof certifies the graph is complete (no dropped
     node, no false edge). Honest accept; a dropped node, a duplicated node, and
     a tampered value are all rejected; proof is O(log n)."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs)
     prefix = recs[0][0].split(":")[0] + ":"
     cert = h.lineage_certificate(prefix)
@@ -1075,7 +1172,7 @@ def measure_concurrent(name, n, batch):
     verification must hold at every step (the index state is consistent with
     the committed root), and query latency under the write pressure is
     compared with a static (pre-built) index."""
-    recs = WORKLOADS[name](n)
+    recs = load_records(name, n)
     h = HybridIndex(recs[:batch])
     q_lat = []
     ok_all = True
@@ -1198,6 +1295,71 @@ def measure_dynamic_consistency(n_accounts=2000, rounds=10, update_frac=0.5,
     * V5 deletion-version absence: a deleted key's non-membership proof verifies
       against every version root at which it is absent."""
     from workloads import mutable_state_tristate
+    if _SOURCE == "real":
+        initial, batches = ds.get_data_source(
+            "real", path=_DATA_PATH).tristate_batches(n_accounts, name="evoting")
+        h = HybridIndex(initial)
+        for b in batches:
+            h.apply_mutations(b)
+        m = h.version_count()
+        keysets = [set(s["keys"]) for s in h.history]
+
+        def verify_at(k, v):
+            if k in keysets[v - 1]:
+                rec = h.query_point_at(k, v)
+                return HybridIndex.verify_result(
+                    h.certificate_at([rec], v), h.root_at(v))
+            nm = h.nonmembership_proof_at(k, v)
+            return nm is not None and HybridIndex.verify_nonmembership(
+                nm, h.root_at(v))
+
+        sample = [initial[i][0] for i in range(0, len(initial),
+                                                max(1, len(initial) // 30))][:30]
+        v2_ok = all(verify_at(k, v) for k in sample for v in range(1, m + 1))
+        lc_key = next((k for k, _ in initial
+                       if 1 < sum(1 for v in range(1, m + 1)
+                                   if k in keysets[v - 1]) < m), None)
+        v1_ok = (lc_key is not None and
+                 all(verify_at(lc_key, v) for v in range(1, m + 1)))
+        lk = next((k for k in sample if all(k in keysets[v - 1]
+                                            for v in range(1, m + 1))), None)
+        v3_ok = False
+        if lk:
+            seq = [h.query_point_at(lk, v)[1] for v in range(1, m + 1)]
+            vals = [int(x) for x in seq if str(x).lstrip("-").isdigit()]
+            v3_ok = (all(seq[i] == seq[i - 1] + 1 for i in range(1, len(seq))) and
+                     all(verify_at(lk, v) for v in range(1, m + 1))) if len(vals) == m else False
+        batch = [("set", "acct:00000000", "200"), ("set", "acct:00000000", "300")]
+        seen, conflict = {}, False
+        for op, k, *rest in batch:
+            if k in seen and seen[k] != rest[0]:
+                conflict = True
+            seen[k] = rest[0]
+        h2 = HybridIndex([("acct:00000000", "100")])
+        h2.apply_mutations(batch)
+        lww = h2.query_point("acct:00000000")
+        v4_ok = HybridIndex.verify_result(h2.certificate([lww]), h2.root)
+        deleted_keys = [k for k, _ in initial if k not in keysets[m - 1]]
+        dk = deleted_keys[0] if deleted_keys else None
+        v5_ok = (dk is not None and all(verify_at(dk, v) for v in range(1, m + 1)
+                                        if dk not in keysets[v - 1]))
+        v5_absent = sum(1 for v in range(1, m + 1)
+                        if dk not in keysets[v - 1]) if dk else 0
+        return {
+            "accounts": len(initial), "rounds": len(batches), "versions": m,
+            "lifecycle_key": lc_key,
+            "lifecycle_present_versions": (sum(1 for v in range(1, m + 1)
+                                               if lc_key in keysets[v - 1])
+                                           if lc_key else 0),
+            "V1_lifecycle_consistent": v1_ok,
+            "V2_all_versions_time_travel_ok": v2_ok,
+            "V3_update_sequence_consistent": v3_ok,
+            "V4_conflict_detected": conflict,
+            "V4_last_write_wins": lww[1] == "300",
+            "V4_committed_value_ok": v4_ok,
+            "V5_deleted_absent_versions": v5_absent,
+            "V5_absence_proof_ok": v5_ok, "source": "real",
+        }
     initial, batches = mutable_state_tristate(n_accounts, rounds, update_frac,
                                               delete_frac)
     h = HybridIndex(initial)
@@ -1274,7 +1436,8 @@ def measure_dynamic_consistency(n_accounts=2000, rounds=10, update_frac=0.5,
     }
 
 
-def measure_reorg(n=8000, batch=1000, finality_depth=2, fork_from=3):
+def measure_reorg(n=8000, batch=1000, finality_depth=2, fork_from=3,
+                 name="supplychain"):
     """Chain fork / reorg handling (M5).
 
     The verifier anchors to the FINALIZED canonical root set rather than to any
@@ -1288,22 +1451,33 @@ def measure_reorg(n=8000, batch=1000, finality_depth=2, fork_from=3):
       R4  certificate against an OLD FINALIZED root -> accepted (finalized roots
           are immutable across reorgs)
     """
-    recs = WORKLOADS["supplychain"](n)
-    nv = n // batch  # number of committed versions
-
-    # Branch A (canonical) and Branch B (abandoned) share the first `fork_from`
-    # versions, then diverge. B commits a DIFFERENT batch -> its root is stale.
-    hA = HybridIndex(recs[:batch])
-    for i in range(1, nv):
-        hA.append_batch(recs[i * batch:(i + 1) * batch])
-
-    hB = HybridIndex(recs[:batch])
-    for i in range(1, fork_from):
-        hB.append_batch(recs[i * batch:(i + 1) * batch])
-    # B's fork commits shifted/tampered records -> abandoned-branch root
-    stale_batch = [(k + "_s", v) for k, v in recs[fork_from * batch:(fork_from + 1) * batch]]
-    hB.append_batch(stale_batch)
-    stale_root = hB.root  # not on the canonical chain
+    if _SOURCE == "real":
+        init, batches, (fv, fork_batch) = ds.get_data_source(
+            "real", path=_DATA_PATH).fork_batches(name, n)
+        recs = init + [r for b in batches for r in b]
+        nv = len(batches) + 1
+        hA = HybridIndex(init)
+        for b in batches:
+            hA.append_batch(b)
+        hB = HybridIndex(init)
+        hB.append_batch(fork_batch)
+        stale_root = hB.root  # abandoned branch, not on the canonical chain
+    else:
+        recs = load_records("supplychain", n)
+        nv = n // batch  # number of committed versions
+        # Branch A (canonical) and Branch B (abandoned) share the first
+        # `fork_from` versions, then diverge. B commits a DIFFERENT batch ->
+        # its root is stale.
+        hA = HybridIndex(recs[:batch])
+        for i in range(1, nv):
+            hA.append_batch(recs[i * batch:(i + 1) * batch])
+        hB = HybridIndex(recs[:batch])
+        for i in range(1, fork_from):
+            hB.append_batch(recs[i * batch:(i + 1) * batch])
+        stale_batch = [(k + "_s", v)
+                       for k, v in recs[fork_from * batch:(fork_from + 1) * batch]]
+        hB.append_batch(stale_batch)
+        stale_root = hB.root  # not on the canonical chain
 
     canonical_roots = [hA.history[v - 1]["root"] for v in range(1, nv + 1)]
     # finality: the newest `finality_depth` roots are NOT yet final
@@ -1403,6 +1577,15 @@ def run_all(workload, n):
             "baseline_compare": base}
 
 
+def _safe(label, fn):
+    """Run ``fn``; on failure (e.g. a real-source adapter not wired to a CSV)
+    return a clear error dict instead of aborting the whole harness."""
+    try:
+        return fn()
+    except Exception as e:  # noqa: BLE001 - report, never crash the run
+        return {"error": f"{type(e).__name__}: {e}", "source": _SOURCE}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--workload", default="evoting", choices=list(WORKLOADS))
@@ -1410,75 +1593,131 @@ def main():
     ap.add_argument("--all", action="store_true", help="run all 3 workloads")
     ap.add_argument("--scaling", action="store_true",
                     help="run the scaling sweep (default n_list)")
+    ap.add_argument("--source", default="synthetic", choices=["synthetic", "real"],
+                    help="synthetic traces (paper) or a real chain export")
+    ap.add_argument("--data-path", default="",
+                    help="CSV export for --source real (see 真实链数据导出字段规范.md)")
     args = ap.parse_args()
+
+    global _SOURCE, _DATA_PATH
+    _SOURCE = args.source
+    _DATA_PATH = args.data_path
 
     workloads = list(WORKLOADS) if args.all else [args.workload]
     result = {}
+    # Scaling sweep target sizes; when reading a real export, cap each point at
+    # the actual row count so we never probe beyond the dataset.
+    if _SOURCE == "real" and _DATA_PATH:
+        avail = ds.get_data_source("real", path=_DATA_PATH).row_count() or args.n
+        scaling_list = [m for m in (1000, 10000, 100000, 1000000) if m <= avail]
+        if not scaling_list:
+            scaling_list = [avail]
+    else:
+        scaling_list = [1000, 10000, 100000, 1000000]
+    # Every measure is wrapped: under --source real a missing/partial CSV
+    # (e.g. only a flat export, no versioned/fork export) degrades to a clear
+    # error dict for that experiment instead of aborting the whole run.
     for w in workloads:
-        result[w] = run_all(w, args.n)
+        result[w] = _safe("run_all", lambda: run_all(w, args.n))
     # scaling sweep (fixed |R| = 1000), up to 1e6
-    result["scaling"] = {w: measure_scaling(w, [1000, 10000, 100000, 1000000])
+    result["scaling"] = {w: _safe("scaling",
+                                  lambda: measure_scaling(w, scaling_list))
                          for w in workloads}
     # statistical adversarial soundness + incremental cost + query classes
-    result["multi_seed"] = {w: measure_multi_seed(w, args.n, K=20)
+    result["multi_seed"] = {w: _safe("multi_seed",
+                                     lambda: measure_multi_seed(w, args.n, K=20))
                             for w in workloads}
-    result["incremental"] = {w: measure_incremental(w, args.n,
-                                                    batch=max(100, args.n // 10))
+    result["incremental"] = {w: _safe("incremental",
+                                     lambda: measure_incremental(
+                                         w, args.n,
+                                         batch=max(100, args.n // 10)))
                              for w in workloads}
-    result["query_classes"] = {w: measure_query_classes(w, args.n)
+    result["query_classes"] = {w: _safe("query_classes",
+                                        lambda: measure_query_classes(w, args.n))
                                for w in workloads}
     # A+B: versioned history (time-travel) + authenticated range-proof
-    result["range_proof"] = {w: measure_range_proof(w, args.n) for w in workloads}
+    result["range_proof"] = {w: _safe("range_proof",
+                                      lambda: measure_range_proof(w, args.n))
+                             for w in workloads}
     result["range_proof_scaling"] = {
-        w: [measure_range_proof(w, nn, frac=0.25) for nn in
-            [1000, 10000, 100000, 1000000]]
+        w: _safe("range_proof_scaling",
+                 lambda: [measure_range_proof(w, nn, frac=0.25) for nn in
+                          [1000, 10000, 100000, 1000000]])
         for w in workloads}
-    result["versioned"] = {w: measure_versioned(w, args.n,
-                                                batch=max(100, args.n // 10))
+    result["versioned"] = {w: _safe("versioned",
+                                   lambda: measure_versioned(
+                                       w, args.n, batch=max(100, args.n // 10)))
                            for w in workloads}
     # J/F/G: mutable state (updates) + extended attacks + verify-vs-|R| curve
-    result["mutable_state"] = measure_mutable(n_accounts=2000, rounds=10,
-                                              update_frac=0.5)
-    result["attacks"] = {w: measure_attacks(w, args.n,
-                                            batch=max(100, args.n // 10))
+    result["mutable_state"] = _safe(
+        "mutable_state",
+        lambda: measure_mutable(n_accounts=2000, rounds=10, update_frac=0.5))
+    result["attacks"] = {w: _safe("attacks",
+                                  lambda: measure_attacks(
+                                      w, args.n, batch=max(100, args.n // 10)))
                          for w in workloads}
-    result["verify_curve"] = {w: measure_verify_curve(w, args.n) for w in workloads}
+    result["verify_curve"] = {w: _safe("verify_curve",
+                                       lambda: measure_verify_curve(w, args.n))
+                              for w in workloads}
     # K/M/L: lightweight-client verification + verifiable lineage + mixed load
-    result["portable_verify"] = {w: measure_portable_verify(w, args.n)
+    result["portable_verify"] = {w: _safe("portable_verify",
+                                          lambda: measure_portable_verify(w, args.n))
                                  for w in workloads}
-    result["lineage_verify"] = {w: measure_lineage_verify(w, args.n)
+    result["lineage_verify"] = {w: _safe("lineage_verify",
+                                         lambda: measure_lineage_verify(w, args.n))
                                 for w in workloads}
-    result["concurrent"] = {w: measure_concurrent(w, args.n,
-                                                  batch=max(100, args.n // 10))
+    result["concurrent"] = {w: _safe("concurrent",
+                                     lambda: measure_concurrent(
+                                         w, args.n, batch=max(100, args.n // 10)))
                             for w in workloads}
-    # I': high-fidelity synthetic data (Ethereum-style)
-    result["highfidelity"] = measure_highfidelity(n=args.n, accounts=2000,
-                                                  rounds=10)
+    # I': high-fidelity synthetic data (Ethereum-style) -- synthetic-only
+    if _SOURCE == "real":
+        result["highfidelity"] = {
+            "note": "high-fidelity Ethereum-style traces are synthetic; skipped "
+                    "under --source real. Use a real ERC-20 export with "
+                    "--data-path for the flat/versioned measures instead.",
+            "source": "real"}
+    else:
+        result["highfidelity"] = _safe(
+            "highfidelity",
+            lambda: measure_highfidelity(n=args.n, accounts=2000, rounds=10))
     # N: tri-state delete semantics (insert/update/delete/recover)
-    result["delete_semantics"] = measure_delete_semantics(
-        n_accounts=2000, rounds=10, update_frac=0.5, delete_frac=0.2)
+    result["delete_semantics"] = _safe(
+        "delete_semantics",
+        lambda: measure_delete_semantics(
+            n_accounts=2000, rounds=10, update_frac=0.5, delete_frac=0.2))
     # O: batch verification amortization (individual vs range-proof batched)
-    result["batch_verify"] = {w: measure_batch_verify(w, args.n)
+    result["batch_verify"] = {w: _safe("batch_verify",
+                                       lambda: measure_batch_verify(w, args.n))
                               for w in workloads}
     # AC+S: compact subtree aggregate certificate + coverage completeness
-    result["compact_aggregate"] = {w: measure_compact_aggregate(w, args.n)
+    result["compact_aggregate"] = {w: _safe("compact_aggregate",
+                                            lambda: measure_compact_aggregate(w, args.n))
                                    for w in workloads}
-    result["aggregate_coverage"] = {w: measure_aggregate_coverage(w, args.n)
+    result["aggregate_coverage"] = {w: _safe("aggregate_coverage",
+                                             lambda: measure_aggregate_coverage(w, args.n))
                                     for w in workloads}
     # X: multi-indexer quorum (Byzantine) verification
-    result["quorum"] = {w: measure_quorum(w, args.n) for w in workloads}
+    result["quorum"] = {w: _safe("quorum",
+                                 lambda: measure_quorum(w, args.n))
+                        for w in workloads}
     # V: dynamic-state unified consistency (time-travel+update+delete)
-    result["dynamic_consistency"] = measure_dynamic_consistency(
-        n_accounts=2000, rounds=10, update_frac=0.5, delete_frac=0.2)
+    result["dynamic_consistency"] = _safe(
+        "dynamic_consistency",
+        lambda: measure_dynamic_consistency(
+            n_accounts=2000, rounds=10, update_frac=0.5, delete_frac=0.2))
     # M5: chain fork / reorg handling (finalized-root anchor)
-    result["reorg"] = measure_reorg(n=8000, batch=1000, finality_depth=2,
-                                    fork_from=3)
+    result["reorg"] = _safe(
+        "reorg",
+        lambda: measure_reorg(n=8000, batch=1000, finality_depth=2, fork_from=3))
     # M6: compact aggregation certificate size bound (vs n and |G|)
     result["compact_cert_curve"] = measure_compact_cert_curve()
+    result["_meta"] = {"source": _SOURCE, "data_path": _DATA_PATH,
+                       "workloads": workloads, "n": args.n}
     out_path = OUT / "full_eval.json"
     out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
-    print(json.dumps({"ok": True, "workloads": workloads, "n": args.n,
-                      "out": str(out_path)}))
+    print(json.dumps({"ok": True, "source": _SOURCE, "workloads": workloads,
+                      "n": args.n, "out": str(out_path)}))
     sys.stderr.write(f"[written] {out_path}\n")
 
 

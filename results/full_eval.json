@@ -9,8 +9,8 @@
       "covered_records": 5001,
       "correct": true,
       "verify_ok": true,
-      "agg_ms": 2.17,
-      "verify_ms": 129.268,
+      "agg_ms": 1.84,
+      "verify_ms": 120.629,
       "cert_size_bytes": 2240448,
       "groups": 5,
       "adversarial": {
@@ -50,22 +50,22 @@
           "selectivity": 0.01,
           "rows": 100,
           "hybrid_ms": 0.01,
-          "fullscan_ms": 0.68,
+          "fullscan_ms": 0.62,
           "indexer_ms": 0.02
         },
         {
           "selectivity": 0.1,
           "rows": 1000,
           "hybrid_ms": 0.01,
-          "fullscan_ms": 0.69,
-          "indexer_ms": 0.27
+          "fullscan_ms": 0.64,
+          "indexer_ms": 0.26
         },
         {
           "selectivity": 0.5,
           "rows": 5000,
-          "hybrid_ms": 0.02,
-          "fullscan_ms": 0.85,
-          "indexer_ms": 0.58
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.8,
+          "indexer_ms": 0.53
         }
       ]
     },
@@ -92,8 +92,8 @@
       "covered_records": 5001,
       "correct": true,
       "verify_ok": true,
-      "agg_ms": 3.52,
-      "verify_ms": 124.867,
+      "agg_ms": 2.77,
+      "verify_ms": 112.461,
       "cert_size_bytes": 2240448,
       "groups": 26,
       "adversarial": {
@@ -133,22 +133,22 @@
           "selectivity": 0.01,
           "rows": 100,
           "hybrid_ms": 0.01,
-          "fullscan_ms": 0.62,
-          "indexer_ms": 0.22
+          "fullscan_ms": 0.59,
+          "indexer_ms": 0.02
         },
         {
           "selectivity": 0.1,
           "rows": 1000,
-          "hybrid_ms": 0.02,
-          "fullscan_ms": 2.19,
-          "indexer_ms": 0.31
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.62,
+          "indexer_ms": 0.23
         },
         {
           "selectivity": 0.5,
           "rows": 5000,
-          "hybrid_ms": 0.1,
-          "fullscan_ms": 1.69,
-          "indexer_ms": 1.02
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.76,
+          "indexer_ms": 0.51
         }
       ]
     },
@@ -175,8 +175,8 @@
       "covered_records": 5001,
       "correct": true,
       "verify_ok": true,
-      "agg_ms": 2.1,
-      "verify_ms": 130.589,
+      "agg_ms": 3.24,
+      "verify_ms": 115.456,
       "cert_size_bytes": 2240448,
       "groups": 5,
       "adversarial": {
@@ -216,7 +216,7 @@
           "selectivity": 0.01,
           "rows": 100,
           "hybrid_ms": 0.01,
-          "fullscan_ms": 0.58,
+          "fullscan_ms": 0.59,
           "indexer_ms": 0.01
         },
         {
@@ -224,14 +224,14 @@
           "rows": 1000,
           "hybrid_ms": 0.01,
           "fullscan_ms": 0.61,
-          "indexer_ms": 0.24
+          "indexer_ms": 0.22
         },
         {
           "selectivity": 0.5,
           "rows": 5000,
-          "hybrid_ms": 0.02,
-          "fullscan_ms": 0.69,
-          "indexer_ms": 0.56
+          "hybrid_ms": 0.01,
+          "fullscan_ms": 0.71,
+          "indexer_ms": 0.59
         }
       ]
     },
@@ -257,10 +257,10 @@
           "n": 1000,
           "point_ms": 0.001,
           "point_ms_sd": 0.0,
-          "range_ms": 0.03,
+          "range_ms": 0.01,
           "result_rows": 1000,
-          "verify_ms": 17.93,
-          "verify_ms_sd": 0.49,
+          "verify_ms": 16.42,
+          "verify_ms_sd": 0.11,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 320000,
@@ -268,12 +268,12 @@
         },
         {
           "n": 10000,
-          "point_ms": 0.003,
-          "point_ms_sd": 0.001,
+          "point_ms": 0.002,
+          "point_ms_sd": 0.0,
           "range_ms": 0.01,
           "result_rows": 1000,
-          "verify_ms": 24.47,
-          "verify_ms_sd": 0.76,
+          "verify_ms": 22.01,
+          "verify_ms_sd": 0.19,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 448000,
@@ -283,10 +283,10 @@
           "n": 100000,
           "point_ms": 0.003,
           "point_ms_sd": 0.001,
-          "range_ms": 0.04,
+          "range_ms": 0.01,
           "result_rows": 1000,
-          "verify_ms": 31.38,
-          "verify_ms_sd": 3.62,
+          "verify_ms": 33.56,
+          "verify_ms_sd": 6.22,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 544000,
@@ -295,11 +295,11 @@
         {
           "n": 1000000,
           "point_ms": 0.006,
-          "point_ms_sd": 0.002,
+          "point_ms_sd": 0.003,
           "range_ms": 0.02,
           "result_rows": 1000,
-          "verify_ms": 30.07,
-          "verify_ms_sd": 0.77,
+          "verify_ms": 30.72,
+          "verify_ms_sd": 0.37,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 640000,
@@ -315,10 +315,10 @@
           "n": 1000,
           "point_ms": 0.001,
           "point_ms_sd": 0.0,
-          "range_ms": 0.02,
+          "range_ms": 0.03,
           "result_rows": 1000,
-          "verify_ms": 16.41,
-          "verify_ms_sd": 0.46,
+          "verify_ms": 16.46,
+          "verify_ms_sd": 0.31,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 320000,
@@ -327,11 +327,11 @@
         {
           "n": 10000,
           "point_ms": 0.003,
-          "point_ms_sd": 0.001,
-          "range_ms": 0.02,
+          "point_ms_sd": 0.002,
+          "range_ms": 0.01,
           "result_rows": 1000,
-          "verify_ms": 22.32,
-          "verify_ms_sd": 0.48,
+          "verify_ms": 21.86,
+          "verify_ms_sd": 0.51,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 448000,
@@ -339,12 +339,12 @@
         },
         {
           "n": 100000,
-          "point_ms": 0.003,
+          "point_ms": 0.002,
           "point_ms_sd": 0.0,
-          "range_ms": 0.02,
+          "range_ms": 0.01,
           "result_rows": 1000,
-          "verify_ms": 25.57,
-          "verify_ms_sd": 0.67,
+          "verify_ms": 26.24,
+          "verify_ms_sd": 0.7,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 544000,
@@ -353,11 +353,11 @@
         {
           "n": 1000000,
           "point_ms": 0.004,
-          "point_ms_sd": 0.001,
-          "range_ms": 0.01,
+          "point_ms_sd": 0.0,
+          "range_ms": 0.06,
           "result_rows": 1000,
-          "verify_ms": 30.46,
-          "verify_ms_sd": 0.79,
+          "verify_ms": 30.7,
+          "verify_ms_sd": 0.21,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 640000,
@@ -371,12 +371,12 @@
       "points": [
         {
           "n": 1000,
-          "point_ms": 0.001,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.02,
+          "point_ms": 0.002,
+          "point_ms_sd": 0.001,
+          "range_ms": 0.03,
           "result_rows": 1000,
-          "verify_ms": 16.38,
-          "verify_ms_sd": 1.22,
+          "verify_ms": 16.8,
+          "verify_ms_sd": 0.04,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 320000,
@@ -384,12 +384,12 @@
         },
         {
           "n": 10000,
-          "point_ms": 0.002,
-          "point_ms_sd": 0.0,
-          "range_ms": 0.01,
+          "point_ms": 0.003,
+          "point_ms_sd": 0.002,
+          "range_ms": 0.03,
           "result_rows": 1000,
-          "verify_ms": 21.84,
-          "verify_ms_sd": 0.09,
+          "verify_ms": 22.71,
+          "verify_ms_sd": 0.69,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 448000,
@@ -397,12 +397,12 @@
         },
         {
           "n": 100000,
-          "point_ms": 0.003,
+          "point_ms": 0.004,
           "point_ms_sd": 0.001,
-          "range_ms": 0.02,
+          "range_ms": 0.01,
           "result_rows": 1000,
-          "verify_ms": 26.29,
-          "verify_ms_sd": 0.1,
+          "verify_ms": 26.78,
+          "verify_ms_sd": 0.43,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 544000,
@@ -412,10 +412,10 @@
           "n": 1000000,
           "point_ms": 0.003,
           "point_ms_sd": 0.0,
-          "range_ms": 0.01,
+          "range_ms": 0.1,
           "result_rows": 1000,
-          "verify_ms": 30.14,
-          "verify_ms_sd": 0.72,
+          "verify_ms": 30.81,
+          "verify_ms_sd": 0.39,
           "verify_ok": true,
           "reps": 3,
           "cert_size_bytes": 640000,
@@ -456,38 +456,38 @@
       "n_records": 10000,
       "batch": 1000,
       "batches": 10,
-      "full_rebuild_ms": 76.2,
-      "avg_incremental_ms": 44.2,
-      "max_incremental_ms": 103.7
+      "full_rebuild_ms": 70.6,
+      "avg_incremental_ms": 42.6,
+      "max_incremental_ms": 93.7
     },
     "iot": {
       "workload": "iot",
       "n_records": 10000,
       "batch": 1000,
       "batches": 10,
-      "full_rebuild_ms": 77.8,
-      "avg_incremental_ms": 43.9,
-      "max_incremental_ms": 97.1
+      "full_rebuild_ms": 84.2,
+      "avg_incremental_ms": 43.0,
+      "max_incremental_ms": 105.2
     },
     "supplychain": {
       "workload": "supplychain",
       "n_records": 10000,
       "batch": 1000,
       "batches": 10,
-      "full_rebuild_ms": 105.1,
-      "avg_incremental_ms": 76.0,
-      "max_incremental_ms": 136.6
+      "full_rebuild_ms": 72.4,
+      "avg_incremental_ms": 41.9,
+      "max_incremental_ms": 94.4
     }
   },
   "query_classes": {
     "evoting": {
       "workload": "evoting",
       "n_records": 10000,
-      "point_ms": 0.027,
-      "range_ms": 0.105,
-      "agg_ms": 0.105,
-      "lineage_ms": 1.988,
-      "agg_verify_ms": 201.2,
+      "point_ms": 0.008,
+      "range_ms": 0.094,
+      "agg_ms": 0.094,
+      "lineage_ms": 1.218,
+      "agg_verify_ms": 111.2,
       "agg_covered": 5001,
       "agg_cert_KB": 2188
     },
@@ -495,21 +495,21 @@
       "workload": "iot",
       "n_records": 10000,
       "point_ms": 0.006,
-      "range_ms": 0.109,
-      "agg_ms": 0.109,
-      "lineage_ms": 0.91,
-      "agg_verify_ms": 147.0,
+      "range_ms": 0.056,
+      "agg_ms": 0.056,
+      "lineage_ms": 1.485,
+      "agg_verify_ms": 114.6,
       "agg_covered": 5001,
       "agg_cert_KB": 2188
     },
     "supplychain": {
       "workload": "supplychain",
       "n_records": 10000,
-      "point_ms": 0.008,
-      "range_ms": 0.104,
-      "agg_ms": 0.104,
-      "lineage_ms": 0.856,
-      "agg_verify_ms": 148.1,
+      "point_ms": 0.005,
+      "range_ms": 0.068,
+      "agg_ms": 0.068,
+      "lineage_ms": 0.798,
+      "agg_verify_ms": 113.9,
       "agg_covered": 5001,
       "agg_cert_KB": 2188
     }
@@ -527,8 +527,8 @@
       "proof_subtrees": 10,
       "proof_total_bytes": 2944,
       "proof_boundary_bytes": 1056,
-      "gen_ms": 0.431,
-      "verify_ms": 7.986
+      "gen_ms": 0.59,
+      "verify_ms": 7.679
     },
     "iot": {
       "workload": "iot",
@@ -542,8 +542,8 @@
       "proof_subtrees": 10,
       "proof_total_bytes": 2944,
       "proof_boundary_bytes": 1056,
-      "gen_ms": 0.524,
-      "verify_ms": 7.623
+      "gen_ms": 0.652,
+      "verify_ms": 7.671
     },
     "supplychain": {
       "workload": "supplychain",
@@ -557,8 +557,8 @@
       "proof_subtrees": 10,
       "proof_total_bytes": 2944,
       "proof_boundary_bytes": 1056,
-      "gen_ms": 0.56,
-      "verify_ms": 19.091
+      "gen_ms": 0.358,
+      "verify_ms": 9.165
     }
   },
   "range_proof_scaling": {
@@ -575,8 +575,8 @@
         "proof_subtrees": 7,
         "proof_total_bytes": 1440,
         "proof_boundary_bytes": 800,
-        "gen_ms": 0.143,
-        "verify_ms": 2.083
+        "gen_ms": 0.081,
+        "verify_ms": 0.835
       },
       {
         "workload": "evoting",
@@ -590,8 +590,8 @@
         "proof_subtrees": 10,
         "proof_total_bytes": 2944,
         "proof_boundary_bytes": 1056,
-        "gen_ms": 0.419,
-        "verify_ms": 10.308
+        "gen_ms": 0.382,
+        "verify_ms": 11.023
       },
       {
         "workload": "evoting",
@@ -605,8 +605,8 @@
         "proof_subtrees": 11,
         "proof_total_bytes": 3008,
         "proof_boundary_bytes": 1184,
-        "gen_ms": 5.567,
-        "verify_ms": 92.605
+        "gen_ms": 5.231,
+        "verify_ms": 86.479
       },
       {
         "workload": "evoting",
@@ -620,8 +620,8 @@
         "proof_subtrees": 14,
         "proof_total_bytes": 4800,
         "proof_boundary_bytes": 1472,
-        "gen_ms": 100.801,
-        "verify_ms": 925.031
+        "gen_ms": 93.409,
+        "verify_ms": 1055.54
       }
     ],
     "iot": [
@@ -637,8 +637,8 @@
         "proof_subtrees": 7,
         "proof_total_bytes": 1440,
         "proof_boundary_bytes": 800,
-        "gen_ms": 0.112,
-        "verify_ms": 1.807
+        "gen_ms": 0.107,
+        "verify_ms": 1.19
       },
       {
         "workload": "iot",
@@ -652,8 +652,8 @@
         "proof_subtrees": 10,
         "proof_total_bytes": 2944,
         "proof_boundary_bytes": 1056,
-        "gen_ms": 0.414,
-        "verify_ms": 8.547
+        "gen_ms": 0.396,
+        "verify_ms": 7.418
       },
       {
         "workload": "iot",
@@ -667,8 +667,8 @@
         "proof_subtrees": 11,
         "proof_total_bytes": 3008,
         "proof_boundary_bytes": 1184,
-        "gen_ms": 6.229,
-        "verify_ms": 113.185
+        "gen_ms": 5.909,
+        "verify_ms": 84.321
       },
       {
         "workload": "iot",
@@ -682,8 +682,8 @@
         "proof_subtrees": 14,
         "proof_total_bytes": 4800,
         "proof_boundary_bytes": 1472,
-        "gen_ms": 84.373,
-        "verify_ms": 1067.289
+        "gen_ms": 86.442,
+        "verify_ms": 878.288
       }
     ],
     "supplychain": [
@@ -699,8 +699,8 @@
         "proof_subtrees": 7,
         "proof_total_bytes": 1440,
         "proof_boundary_bytes": 800,
-        "gen_ms": 0.061,
-        "verify_ms": 0.941
+        "gen_ms": 0.115,
+        "verify_ms": 1.147
       },
       {
         "workload": "supplychain",
@@ -714,8 +714,8 @@
         "proof_subtrees": 10,
         "proof_total_bytes": 2944,
         "proof_boundary_bytes": 1056,
-        "gen_ms": 0.425,
-        "verify_ms": 9.552
+        "gen_ms": 0.386,
+        "verify_ms": 7.899
       },
       {
         "workload": "supplychain",
@@ -729,8 +729,8 @@
         "proof_subtrees": 11,
         "proof_total_bytes": 3008,
         "proof_boundary_bytes": 1184,
-        "gen_ms": 10.398,
-        "verify_ms": 140.822
+        "gen_ms": 9.274,
+        "verify_ms": 86.417
       },
       {
         "workload": "supplychain",
@@ -744,8 +744,8 @@
         "proof_subtrees": 14,
         "proof_total_bytes": 4800,
         "proof_boundary_bytes": 1472,
-        "gen_ms": 139.459,
-        "verify_ms": 1375.834
+        "gen_ms": 112.971,
+        "verify_ms": 1042.02
       }
     ]
   },
@@ -763,8 +763,8 @@
       "T3_rangeproof_stale_reject": true,
       "T4_honest_at_target_root": true,
       "T4_oldroot_replay_rejected": true,
-      "time_travel_ms": 0.023,
-      "time_travel_verify_ms": 8.74
+      "time_travel_ms": 0.012,
+      "time_travel_verify_ms": 8.988
     },
     "iot": {
       "workload": "iot",
@@ -779,8 +779,8 @@
       "T3_rangeproof_stale_reject": true,
       "T4_honest_at_target_root": true,
       "T4_oldroot_replay_rejected": true,
-      "time_travel_ms": 0.106,
-      "time_travel_verify_ms": 8.36
+      "time_travel_ms": 0.012,
+      "time_travel_verify_ms": 8.972
     },
     "supplychain": {
       "workload": "supplychain",
@@ -795,8 +795,8 @@
       "T3_rangeproof_stale_reject": true,
       "T4_honest_at_target_root": true,
       "T4_oldroot_replay_rejected": true,
-      "time_travel_ms": 0.025,
-      "time_travel_verify_ms": 7.762
+      "time_travel_ms": 0.027,
+      "time_travel_verify_ms": 8.326
     }
   },
   "mutable_state": {
@@ -805,14 +805,14 @@
     "versions": 11,
     "target_version": 5,
     "skip_version": 7,
-    "build_ms": 151.9,
+    "build_ms": 145.8,
     "latest_value_ok": true,
     "time_travel_ok": true,
     "update_replay_rejected": true,
     "skip_version_rejected": true,
     "version_bound_not_reusable": true,
     "point_ms": 0.001,
-    "time_travel_ms": 0.002
+    "time_travel_ms": 0.001
   },
   "attacks": {
     "evoting": {
@@ -860,43 +860,43 @@
         },
         {
           "R": 50,
-          "verify_ms": 1.068,
-          "per_record_ms": 0.0214,
+          "verify_ms": 1.009,
+          "per_record_ms": 0.0202,
           "cert_bytes": 22400,
           "verify_ok": true
         },
         {
           "R": 100,
-          "verify_ms": 3.062,
-          "per_record_ms": 0.0306,
+          "verify_ms": 2.019,
+          "per_record_ms": 0.0202,
           "cert_bytes": 44800,
           "verify_ok": true
         },
         {
           "R": 500,
-          "verify_ms": 10.904,
-          "per_record_ms": 0.0218,
+          "verify_ms": 11.678,
+          "per_record_ms": 0.0234,
           "cert_bytes": 224000,
           "verify_ok": true
         },
         {
           "R": 1000,
-          "verify_ms": 22.815,
-          "per_record_ms": 0.0228,
+          "verify_ms": 21.87,
+          "per_record_ms": 0.0219,
           "cert_bytes": 448000,
           "verify_ok": true
         },
         {
           "R": 2500,
-          "verify_ms": 56.583,
-          "per_record_ms": 0.0226,
+          "verify_ms": 55.706,
+          "per_record_ms": 0.0223,
           "cert_bytes": 1120000,
           "verify_ok": true
         },
         {
           "R": 5000,
-          "verify_ms": 114.792,
-          "per_record_ms": 0.023,
+          "verify_ms": 111.498,
+          "per_record_ms": 0.0223,
           "cert_bytes": 2240000,
           "verify_ok": true
         }
@@ -908,50 +908,50 @@
       "points": [
         {
           "R": 10,
-          "verify_ms": 0.229,
-          "per_record_ms": 0.0229,
+          "verify_ms": 1.217,
+          "per_record_ms": 0.1217,
           "cert_bytes": 4480,
           "verify_ok": true
         },
         {
           "R": 50,
-          "verify_ms": 1.017,
-          "per_record_ms": 0.0203,
+          "verify_ms": 2.457,
+          "per_record_ms": 0.0491,
           "cert_bytes": 22400,
           "verify_ok": true
         },
         {
           "R": 100,
-          "verify_ms": 2.266,
-          "per_record_ms": 0.0227,
+          "verify_ms": 4.544,
+          "per_record_ms": 0.0454,
           "cert_bytes": 44800,
           "verify_ok": true
         },
         {
           "R": 500,
-          "verify_ms": 11.628,
-          "per_record_ms": 0.0233,
+          "verify_ms": 15.264,
+          "per_record_ms": 0.0305,
           "cert_bytes": 224000,
           "verify_ok": true
         },
         {
           "R": 1000,
-          "verify_ms": 22.738,
-          "per_record_ms": 0.0227,
+          "verify_ms": 25.541,
+          "per_record_ms": 0.0255,
           "cert_bytes": 448000,
           "verify_ok": true
         },
         {
           "R": 2500,
-          "verify_ms": 58.169,
-          "per_record_ms": 0.0233,
+          "verify_ms": 57.373,
+          "per_record_ms": 0.0229,
           "cert_bytes": 1120000,
           "verify_ok": true
         },
         {
           "R": 5000,
-          "verify_ms": 118.161,
-          "per_record_ms": 0.0236,
+          "verify_ms": 115.226,
+          "per_record_ms": 0.023,
           "cert_bytes": 2240000,
           "verify_ok": true
         }
@@ -963,50 +963,50 @@
       "points": [
         {
           "R": 10,
-          "verify_ms": 0.227,
-          "per_record_ms": 0.0227,
+          "verify_ms": 0.229,
+          "per_record_ms": 0.0229,
           "cert_bytes": 4480,
           "verify_ok": true
         },
         {
           "R": 50,
-          "verify_ms": 1.05,
+          "verify_ms": 1.052,
           "per_record_ms": 0.021,
           "cert_bytes": 22400,
           "verify_ok": true
         },
         {
           "R": 100,
-          "verify_ms": 2.05,
-          "per_record_ms": 0.0205,
+          "verify_ms": 2.06,
+          "per_record_ms": 0.0206,
           "cert_bytes": 44800,
           "verify_ok": true
         },
         {
           "R": 500,
-          "verify_ms": 12.467,
-          "per_record_ms": 0.0249,
+          "verify_ms": 10.693,
+          "per_record_ms": 0.0214,
           "cert_bytes": 224000,
           "verify_ok": true
         },
         {
           "R": 1000,
-          "verify_ms": 23.915,
-          "per_record_ms": 0.0239,
+          "verify_ms": 22.675,
+          "per_record_ms": 0.0227,
           "cert_bytes": 448000,
           "verify_ok": true
         },
         {
           "R": 2500,
-          "verify_ms": 59.763,
-          "per_record_ms": 0.0239,
+          "verify_ms": 55.424,
+          "per_record_ms": 0.0222,
           "cert_bytes": 1120000,
           "verify_ok": true
         },
         {
           "R": 5000,
-          "verify_ms": 116.139,
-          "per_record_ms": 0.0232,
+          "verify_ms": 113.351,
+          "per_record_ms": 0.0227,
           "cert_bytes": 2240000,
           "verify_ok": true
         }
@@ -1063,8 +1063,8 @@
       "rejects_tamper": true,
       "proof_subtrees": 5,
       "proof_boundary_bytes": 448,
-      "query_ms": 0.926,
-      "verify_ms": 46.532
+      "query_ms": 1.729,
+      "verify_ms": 35.298
     },
     "iot": {
       "workload": "iot",
@@ -1077,8 +1077,8 @@
       "rejects_tamper": true,
       "proof_subtrees": 5,
       "proof_boundary_bytes": 448,
-      "query_ms": 0.931,
-      "verify_ms": 39.284
+      "query_ms": 0.717,
+      "verify_ms": 33.486
     },
     "supplychain": {
       "workload": "supplychain",
@@ -1091,8 +1091,8 @@
       "rejects_tamper": true,
       "proof_subtrees": 5,
       "proof_boundary_bytes": 448,
-      "query_ms": 1.791,
-      "verify_ms": 50.989
+      "query_ms": 0.883,
+      "verify_ms": 34.07
     }
   },
   "concurrent": {
@@ -1102,9 +1102,9 @@
       "batch": 1000,
       "steps": 9,
       "verify_ok_all_steps": true,
-      "avg_query_ms": 4.351,
-      "max_query_ms": 5.764,
-      "static_query_ms": 4.438,
+      "avg_query_ms": 3.397,
+      "max_query_ms": 4.463,
+      "static_query_ms": 3.225,
       "static_ok": true
     },
     "iot": {
@@ -1113,9 +1113,9 @@
       "batch": 1000,
       "steps": 9,
       "verify_ok_all_steps": true,
-      "avg_query_ms": 3.911,
-      "max_query_ms": 5.479,
-      "static_query_ms": 4.867,
+      "avg_query_ms": 3.449,
+      "max_query_ms": 4.264,
+      "static_query_ms": 3.675,
       "static_ok": true
     },
     "supplychain": {
@@ -1124,9 +1124,9 @@
       "batch": 1000,
       "steps": 9,
       "verify_ok_all_steps": true,
-      "avg_query_ms": 3.557,
-      "max_query_ms": 4.698,
-      "static_query_ms": 3.279,
+      "avg_query_ms": 3.264,
+      "max_query_ms": 3.769,
+      "static_query_ms": 3.203,
       "static_ok": true
     }
   },
@@ -1159,7 +1159,7 @@
     "versions": 11,
     "live_at_latest": 1800,
     "deleted_at_latest": 200,
-    "build_ms": 113.8,
+    "build_ms": 122.5,
     "N1_live_state_ok": true,
     "N2_absent_query": true,
     "N2_nonmembership_ok": true,
@@ -1176,61 +1176,61 @@
       "points": [
         {
           "K": 10,
-          "individual_ms": 0.251,
-          "per_record_individual_ms": 0.02506,
+          "individual_ms": 0.233,
+          "per_record_individual_ms": 0.02329,
           "batched_ms": 0.11,
-          "per_record_batched_ms": 0.01098,
-          "amortization_ratio": 2.28,
+          "per_record_batched_ms": 0.01102,
+          "amortization_ratio": 2.11,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 50,
-          "individual_ms": 1.03,
-          "per_record_individual_ms": 0.0206,
-          "batched_ms": 0.223,
-          "per_record_batched_ms": 0.00446,
-          "amortization_ratio": 4.62,
+          "individual_ms": 1.092,
+          "per_record_individual_ms": 0.02183,
+          "batched_ms": 0.217,
+          "per_record_batched_ms": 0.00435,
+          "amortization_ratio": 5.02,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 100,
-          "individual_ms": 2.043,
-          "per_record_individual_ms": 0.02043,
-          "batched_ms": 0.439,
-          "per_record_batched_ms": 0.00439,
-          "amortization_ratio": 4.65,
+          "individual_ms": 2.02,
+          "per_record_individual_ms": 0.0202,
+          "batched_ms": 0.401,
+          "per_record_batched_ms": 0.00401,
+          "amortization_ratio": 5.04,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 500,
-          "individual_ms": 11.108,
-          "per_record_individual_ms": 0.02222,
-          "batched_ms": 1.633,
-          "per_record_batched_ms": 0.00327,
-          "amortization_ratio": 6.8,
+          "individual_ms": 12.087,
+          "per_record_individual_ms": 0.02417,
+          "batched_ms": 1.561,
+          "per_record_batched_ms": 0.00312,
+          "amortization_ratio": 7.75,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 1000,
-          "individual_ms": 24.375,
-          "per_record_individual_ms": 0.02437,
-          "batched_ms": 3.302,
-          "per_record_batched_ms": 0.0033,
-          "amortization_ratio": 7.38,
+          "individual_ms": 21.937,
+          "per_record_individual_ms": 0.02194,
+          "batched_ms": 3.545,
+          "per_record_batched_ms": 0.00355,
+          "amortization_ratio": 6.19,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 5000,
-          "individual_ms": 114.432,
-          "per_record_individual_ms": 0.02289,
-          "batched_ms": 18.207,
-          "per_record_batched_ms": 0.00364,
-          "amortization_ratio": 6.29,
+          "individual_ms": 114.813,
+          "per_record_individual_ms": 0.02296,
+          "batched_ms": 17.318,
+          "per_record_batched_ms": 0.00346,
+          "amortization_ratio": 6.63,
           "individual_ok": true,
           "batched_ok": true
         }
@@ -1242,61 +1242,61 @@
       "points": [
         {
           "K": 10,
-          "individual_ms": 0.247,
-          "per_record_individual_ms": 0.02465,
-          "batched_ms": 0.113,
-          "per_record_batched_ms": 0.01133,
-          "amortization_ratio": 2.18,
+          "individual_ms": 0.227,
+          "per_record_individual_ms": 0.02271,
+          "batched_ms": 0.109,
+          "per_record_batched_ms": 0.01094,
+          "amortization_ratio": 2.08,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 50,
-          "individual_ms": 1.081,
-          "per_record_individual_ms": 0.02162,
-          "batched_ms": 0.229,
-          "per_record_batched_ms": 0.00458,
-          "amortization_ratio": 4.72,
+          "individual_ms": 1.019,
+          "per_record_individual_ms": 0.02039,
+          "batched_ms": 0.221,
+          "per_record_batched_ms": 0.00442,
+          "amortization_ratio": 4.61,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 100,
-          "individual_ms": 3.029,
-          "per_record_individual_ms": 0.03029,
-          "batched_ms": 0.72,
-          "per_record_batched_ms": 0.0072,
-          "amortization_ratio": 4.21,
+          "individual_ms": 2.046,
+          "per_record_individual_ms": 0.02046,
+          "batched_ms": 0.805,
+          "per_record_batched_ms": 0.00805,
+          "amortization_ratio": 2.54,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 500,
-          "individual_ms": 11.018,
-          "per_record_individual_ms": 0.02204,
-          "batched_ms": 1.702,
-          "per_record_batched_ms": 0.0034,
-          "amortization_ratio": 6.47,
+          "individual_ms": 11.142,
+          "per_record_individual_ms": 0.02228,
+          "batched_ms": 1.557,
+          "per_record_batched_ms": 0.00311,
+          "amortization_ratio": 7.16,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 1000,
-          "individual_ms": 24.67,
-          "per_record_individual_ms": 0.02467,
-          "batched_ms": 3.328,
-          "per_record_batched_ms": 0.00333,
-          "amortization_ratio": 7.41,
+          "individual_ms": 23.294,
+          "per_record_individual_ms": 0.02329,
+          "batched_ms": 3.083,
+          "per_record_batched_ms": 0.00308,
+          "amortization_ratio": 7.56,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 5000,
-          "individual_ms": 124.054,
-          "per_record_individual_ms": 0.02481,
-          "batched_ms": 19.474,
-          "per_record_batched_ms": 0.00389,
-          "amortization_ratio": 6.37,
+          "individual_ms": 114.671,
+          "per_record_individual_ms": 0.02293,
+          "batched_ms": 17.628,
+          "per_record_batched_ms": 0.00353,
+          "amortization_ratio": 6.51,
           "individual_ok": true,
           "batched_ok": true
         }
@@ -1308,61 +1308,61 @@
       "points": [
         {
           "K": 10,
-          "individual_ms": 0.233,
-          "per_record_individual_ms": 0.02326,
-          "batched_ms": 0.11,
-          "per_record_batched_ms": 0.01101,
-          "amortization_ratio": 2.11,
+          "individual_ms": 0.231,
+          "per_record_individual_ms": 0.02311,
+          "batched_ms": 0.109,
+          "per_record_batched_ms": 0.01092,
+          "amortization_ratio": 2.12,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 50,
-          "individual_ms": 1.025,
-          "per_record_individual_ms": 0.02051,
-          "batched_ms": 0.227,
-          "per_record_batched_ms": 0.00453,
-          "amortization_ratio": 4.52,
+          "individual_ms": 1.068,
+          "per_record_individual_ms": 0.02137,
+          "batched_ms": 0.22,
+          "per_record_batched_ms": 0.00439,
+          "amortization_ratio": 4.86,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 100,
-          "individual_ms": 2.272,
-          "per_record_individual_ms": 0.02272,
-          "batched_ms": 0.7,
-          "per_record_batched_ms": 0.007,
-          "amortization_ratio": 3.24,
+          "individual_ms": 2.182,
+          "per_record_individual_ms": 0.02182,
+          "batched_ms": 1.055,
+          "per_record_batched_ms": 0.01055,
+          "amortization_ratio": 2.07,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 500,
-          "individual_ms": 11.951,
-          "per_record_individual_ms": 0.0239,
-          "batched_ms": 1.69,
-          "per_record_batched_ms": 0.00338,
-          "amortization_ratio": 7.07,
+          "individual_ms": 11.895,
+          "per_record_individual_ms": 0.02379,
+          "batched_ms": 1.617,
+          "per_record_batched_ms": 0.00323,
+          "amortization_ratio": 7.36,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 1000,
-          "individual_ms": 25.254,
-          "per_record_individual_ms": 0.02525,
-          "batched_ms": 3.128,
-          "per_record_batched_ms": 0.00313,
-          "amortization_ratio": 8.07,
+          "individual_ms": 23.789,
+          "per_record_individual_ms": 0.02379,
+          "batched_ms": 3.142,
+          "per_record_batched_ms": 0.00314,
+          "amortization_ratio": 7.57,
           "individual_ok": true,
           "batched_ok": true
         },
         {
           "K": 5000,
-          "individual_ms": 118.291,
-          "per_record_individual_ms": 0.02366,
-          "batched_ms": 18.142,
-          "per_record_batched_ms": 0.00363,
-          "amortization_ratio": 6.52,
+          "individual_ms": 114.041,
+          "per_record_individual_ms": 0.02281,
+          "batched_ms": 18.12,
+          "per_record_batched_ms": 0.00362,
+          "amortization_ratio": 6.29,
           "individual_ok": true,
           "batched_ok": true
         }
@@ -1381,7 +1381,7 @@
       "compact_subtrees": 13,
       "aggregate_equal": true,
       "compact_verify_ok": true,
-      "compact_verify_ms": 0.304,
+      "compact_verify_ms": 0.223,
       "forged_value_rejected": true,
       "dropped_subtree_rejected": true
     },
@@ -1396,7 +1396,7 @@
       "compact_subtrees": 13,
       "aggregate_equal": true,
       "compact_verify_ok": true,
-      "compact_verify_ms": 0.219,
+      "compact_verify_ms": 0.201,
       "forged_value_rejected": true,
       "dropped_subtree_rejected": true
     },
@@ -1411,7 +1411,7 @@
       "compact_subtrees": 13,
       "aggregate_equal": true,
       "compact_verify_ok": true,
-      "compact_verify_ms": 0.197,
+      "compact_verify_ms": 0.187,
       "forged_value_rejected": true,
       "dropped_subtree_rejected": true
     }
@@ -1462,8 +1462,8 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 354.445,
-          "single_verify_ms": 118.594,
+          "quorum_verify_ms": 343.472,
+          "single_verify_ms": 112.831,
           "quorum_overhead": 3.0
         },
         {
@@ -1475,9 +1475,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 654.869,
-          "single_verify_ms": 118.594,
-          "quorum_overhead": 5.5
+          "quorum_verify_ms": 578.355,
+          "single_verify_ms": 112.831,
+          "quorum_overhead": 5.1
         },
         {
           "servers": 7,
@@ -1488,8 +1488,8 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 868.448,
-          "single_verify_ms": 118.594,
+          "quorum_verify_ms": 821.584,
+          "single_verify_ms": 112.831,
           "quorum_overhead": 7.3
         }
       ]
@@ -1507,9 +1507,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 382.078,
-          "single_verify_ms": 122.412,
-          "quorum_overhead": 3.1
+          "quorum_verify_ms": 347.155,
+          "single_verify_ms": 116.808,
+          "quorum_overhead": 3.0
         },
         {
           "servers": 5,
@@ -1520,9 +1520,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 621.825,
-          "single_verify_ms": 122.412,
-          "quorum_overhead": 5.1
+          "quorum_verify_ms": 577.181,
+          "single_verify_ms": 116.808,
+          "quorum_overhead": 4.9
         },
         {
           "servers": 7,
@@ -1533,9 +1533,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 904.549,
-          "single_verify_ms": 122.412,
-          "quorum_overhead": 7.4
+          "quorum_verify_ms": 833.998,
+          "single_verify_ms": 116.808,
+          "quorum_overhead": 7.1
         }
       ]
     },
@@ -1552,9 +1552,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 498.718,
-          "single_verify_ms": 127.597,
-          "quorum_overhead": 3.9
+          "quorum_verify_ms": 347.803,
+          "single_verify_ms": 116.096,
+          "quorum_overhead": 3.0
         },
         {
           "servers": 5,
@@ -1565,9 +1565,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 647.398,
-          "single_verify_ms": 127.597,
-          "quorum_overhead": 5.1
+          "quorum_verify_ms": 601.631,
+          "single_verify_ms": 116.096,
+          "quorum_overhead": 5.2
         },
         {
           "servers": 7,
@@ -1578,9 +1578,9 @@
           "X3_malicious_forge_excluded": true,
           "X4_malicious_offline_ok": true,
           "X5_malicious_majority_defeats": true,
-          "quorum_verify_ms": 871.462,
-          "single_verify_ms": 127.597,
-          "quorum_overhead": 6.8
+          "quorum_verify_ms": 812.681,
+          "single_verify_ms": 116.096,
+          "quorum_overhead": 7.0
         }
       ]
     }
@@ -1795,5 +1795,15 @@
       "compression_x": 22587.9,
       "verify_ok": true
     }
-  ]
+  ],
+  "_meta": {
+    "source": "synthetic",
+    "data_path": "",
+    "workloads": [
+      "evoting",
+      "iot",
+      "supplychain"
+    ],
+    "n": 10000
+  }
 }

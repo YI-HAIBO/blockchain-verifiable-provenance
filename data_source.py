@@ -124,19 +124,217 @@ class RealChainDataSource(DataSource):
             raise NotImplementedError(
                 "RealChainDataSource.records is not wired to a dataset yet. "
                 "Provide a real chain export (e.g. an ERC-20 Transfer CSV) and "
-                "call from_erc20_csv(path) / from_state_csv(path), then return "
-                "the result here. The hybrid index consumes the same "
-                "(key, value) shape, so no change to HybridIndex is required."
+                "call from_erc20_csv(path) / from_state_csv(path) / "
+                "from_flat_csv(path), then return the result here. The hybrid "
+                "index consumes the same (key, value) shape, so no change to "
+                "HybridIndex is required."
             )
-        # Default: assume an ERC-20-style export; swap to from_state_csv for
-        # account-state workloads.
-        return self.from_erc20_csv(self.path)[:n]
+        # Auto-detect the CSV flavour from its header so a single --data-path
+        # works for ERC-20 transfers, account-state snapshots, or a generic
+        # (key, value) export.
+        header = self._peek_header(self.path)
+        hl = set(h.strip().lower() for h in header)
+        if hl & {"block_number", "tx_hash", "from", "to"}:
+            loaded = self.from_erc20_csv(self.path)
+        elif hl & {"account", "balance"}:
+            loaded = self.from_state_csv(self.path)
+        else:
+            loaded = self.from_flat_csv(self.path)
+        return loaded[:max(1, n)]
 
-    def batches(self, n_accounts: int = 2000, rounds: int = 10):
-        raise NotImplementedError(
-            "Real mutable-state batches require a real versioned state export. "
-            "Reuse from_state_csv across version snapshots to build batches."
-        )
+    # ------------------------------------------------------------------
+    # Generic (key, value) flat export. Header "key,value" is optional;
+    # without a header the first column is the key, the second the value.
+    # Used for every *stateless* measure (aggregate / lineage / selectivity /
+    # baseline / scaling / range-proof / verify-curve / portable / batch /
+    # compact / coverage / quorum / concurrent / attacks).
+    # ------------------------------------------------------------------
+    def from_flat_csv(self, path: str) -> List[Record]:
+        recs: List[Record] = []
+        with open(path, newline="") as fh:
+            r = csv.reader(fh)
+            header = next(r, None)
+            if header and header[0].strip().lower() in ("key",):
+                rows = r
+            else:
+                fh.seek(0)
+                rows = csv.reader(fh)
+            for row in rows:
+                if len(row) >= 2 and row[0].strip():
+                    recs.append((row[0].strip(), row[1].strip()))
+        return self._sort(recs)
+
+    # ------------------------------------------------------------------
+    # Versioned export: columns `version,key,value` (version = positive int).
+    # Grouped ascending; version 1 becomes the initial state, versions 2..k
+    # become appended batches. Powers time-travel (measure_versioned) and
+    # fork/reorg handling (measure_reorg).
+    # ------------------------------------------------------------------
+    def from_versioned_csv(self, path: str):
+        versions: dict = {}
+        with open(path, newline="") as fh:
+            r = csv.reader(fh)
+            header = next(r, None)
+            rows = r
+            if header and header[0].strip().lower() in ("version",):
+                pass
+            else:
+                fh.seek(0)
+                rows = csv.reader(fh)
+            for row in rows:
+                if len(row) < 3:
+                    continue
+                v = int(row[0].strip())
+                versions.setdefault(v, []).append((row[1].strip(), row[2].strip()))
+        if not versions:
+            raise ValueError(
+                "versioned CSV needs columns: version,key,value")
+        maxv = max(versions)
+        initial = sorted(versions.get(1, []))
+        batches = [sorted(versions.get(v, [])) for v in range(2, maxv + 1)]
+        return initial, batches
+
+    # ------------------------------------------------------------------
+    # Mutable operation log: columns `op,key,value,version`
+    # (op in {set, delete, del}; version optional, defaults to row order).
+    # For set-only semantics (measure_mutable) deletes are dropped; for
+    # tri-state semantics (measure_delete_semantics / dynamic_consistency)
+    # they are kept as ('del', k, '').
+    # ------------------------------------------------------------------
+    def from_mutable_csv(self, path: str, tristate: bool = False):
+        per_version: dict = {}
+        with open(path, newline="") as fh:
+            r = csv.reader(fh)
+            header = next(r, None)
+            rows = r
+            if header and header[0].strip().lower() in ("op",):
+                pass
+            else:
+                fh.seek(0)
+                rows = csv.reader(fh)
+            for row in rows:
+                if len(row) < 3:
+                    continue
+                op = row[0].strip().lower()
+                k = row[1].strip()
+                v = row[2].strip() if len(row) > 2 else ""
+                ver = int(row[3].strip()) if len(row) > 3 and row[3].strip() else 1
+                per_version.setdefault(ver, []).append((op, k, v))
+        if not per_version:
+            raise ValueError(
+                "mutable CSV needs columns: op,key,value[,version] (op in "
+                "set/delete)")
+        maxv = max(per_version)
+        if tristate:
+            initial = [("set", k, v) for (op, k, v) in per_version.get(1, [])]
+            batches = [[(self._norm_op(op), k, v)
+                        for (op, k, v) in per_version.get(vv, [])]
+                       for vv in range(2, maxv + 1)]
+        else:
+            initial = [(k, v) for (op, k, v) in per_version.get(1, [])
+                       if op in ("set", "update")]
+            batches = [[(k, v) for (op, k, v) in per_version.get(vv, [])
+                        if op in ("set", "update")]
+                       for vv in range(2, maxv + 1)]
+        return initial, batches
+
+    @staticmethod
+    def _norm_op(op):
+        op = op.lower()
+        return "del" if op in ("delete", "del", "remove") else "set"
+
+    # ------------------------------------------------------------------
+    # Fork export for reorg: columns `version,key,value,branch`
+    # (branch in {canonical, fork}). Returns (canonical_initial,
+    # canonical_batches, fork_batch) where fork_batch is the divergent batch
+    # on the abandoned branch.
+    # ------------------------------------------------------------------
+    def from_fork_csv(self, path: str):
+        canon: dict = {}
+        fork = None
+        with open(path, newline="") as fh:
+            r = csv.reader(fh)
+            header = next(r, None)
+            rows = r
+            if header and header[0].strip().lower() in ("version",):
+                pass
+            else:
+                fh.seek(0)
+                rows = csv.reader(fh)
+            for row in rows:
+                if len(row) < 4:
+                    continue
+                v = int(row[0].strip()); k = row[1].strip(); val = row[2].strip()
+                branch = row[3].strip().lower()
+                if branch == "fork":
+                    fork = (v, [(k, val)])
+                else:
+                    canon.setdefault(v, []).append((k, val))
+        if fork is None:
+            raise ValueError(
+                "fork CSV needs at least one branch=fork row (version,key,"
+                "value,branch)")
+        if not canon:
+            raise ValueError("fork CSV needs canonical rows")
+        maxv = max(canon)
+        initial = sorted(canon.get(1, []))
+        batches = [sorted(canon.get(v, [])) for v in range(2, maxv + 1)]
+        return initial, batches, fork
+
+    # ---- specialized entry points used by run_full_eval.py ----------------
+    def versioned_batches(self, name: str, n: int = 8000):
+        if not self.path or not os.path.exists(self.path):
+            raise NotImplementedError(
+                "Real versioned data needs a CSV with columns "
+                "version,key,value (one row per committed record). Provide it "
+                "via --data-path. See 真实链数据导出字段规范.md.")
+        return self.from_versioned_csv(self.path)
+
+    def mutable_batches(self, n_accounts: int = 2000, name: str = "evoting"):
+        if not self.path or not os.path.exists(self.path):
+            raise NotImplementedError(
+                "Real mutable data needs a CSV with columns "
+                "op,key,value[,version] (op in set/delete). Provide it via "
+                "--data-path. See 真实链数据导出字段规范.md.")
+        return self.from_mutable_csv(self.path, tristate=False)
+
+    def tristate_batches(self, n_accounts: int = 2000, name: str = "evoting"):
+        if not self.path or not os.path.exists(self.path):
+            raise NotImplementedError(
+                "Real tri-state data needs a CSV with columns "
+                "op,key,value[,version] (op in set/delete). Provide it via "
+                "--data-path. See 真实链数据导出字段规范.md.")
+        return self.from_mutable_csv(self.path, tristate=True)
+
+    def fork_batches(self, name: str = "supplychain", n: int = 8000):
+        if not self.path or not os.path.exists(self.path):
+            raise NotImplementedError(
+                "Real reorg data needs a CSV with columns "
+                "version,key,value,branch (branch in canonical/fork). Provide "
+                "it via --data-path. See 真实链数据导出字段规范.md.")
+        return self.from_fork_csv(self.path)
+
+    @staticmethod
+    def _peek_header(path: str):
+        with open(path, newline="") as fh:
+            return next(csv.reader(fh), [])
+
+    def row_count(self) -> int:
+        """Number of data rows in the real export (used to bound scaling sweeps
+        so a real dataset of size N is never probed beyond N)."""
+        if not self.path or not os.path.exists(self.path):
+            return 0
+        with open(self.path, newline="") as fh:
+            r = csv.reader(fh)
+            header = next(r, None)
+            rows = r
+            if header and header[0].strip().lower() in (
+                    "key", "version", "op", "block_number"):
+                pass
+            else:
+                fh.seek(0)
+                rows = csv.reader(fh)
+            return sum(1 for _ in rows)
 
 
 def get_data_source(kind: str = "synthetic", **kwargs) -> DataSource:
